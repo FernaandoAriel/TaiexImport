@@ -1,0 +1,339 @@
+/* Estilos base mejorados para mobile-first */
+.home-container {
+    font-family: 'Arial', sans-serif;
+    max-width: 100%;
+    overflow-x: hidden;
+    color: #333;
+}
+
+/* Hero Section - Carro Gris */
+.hero-section {
+    position: relative;
+    height: auto;
+    min-height: 300px;
+    background-color: #000;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.hero-image {
+    position: relative;
+    height: 200px;
+    width: 100%;
+    z-index: 1;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.8;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 2rem 1.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.cta-button {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 4px;
+    font-weight: 500;
+    width: auto;
+}
+
+/* Brands Section */
+.brands-section {
+    padding: 1.5rem 1rem;
+    background-color: #f8f8f8;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.brands-section h3 {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #666;
+    text-align: center;
+}
+
+.brand-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.brand-logos img {
+    height: 30px;
+    width: auto;
+    max-width: 100px;
+    object-fit: contain;
+}
+
+/* Services Section */
+.services-section {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    background-color: #fff;
+    gap: 1rem;
+}
+
+.service-item {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.service-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.service-item h3 {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+/* Promo Section - Carro Azul */
+.promo-section {
+    position: relative;
+    height: auto;
+    margin: 2rem 0;
+    overflow: hidden;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.promo-image {
+    position: relative;
+    height: 200px;
+    width: 100%;
+    z-index: 1;
+}
+
+.promo-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.promo-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 60, 0.7), rgba(0, 0, 60, 0.5));
+}
+
+.promo-content {
+    position: relative;
+    z-index: 2;
+    padding: 1.5rem;
+    width: 100%;
+    text-align: center;
+    background: rgba(0, 0, 60, 0.7);
+}
+
+.promo-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.promo-content p {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Featured Vehicles Section */
+.featured-vehicles {
+    padding: 1.5rem;
+    background-color: #f8f8f8;
+}
+
+.featured-vehicles h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.75rem;
+}
+
+.vehicle-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.vehicle-item {
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s;
+}
+
+.vehicle-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    background-color: #f8f8f8;
+    padding: 1rem;
+}
+
+.vehicle-item h4 {
+    font-size: 1.2rem;
+    margin: 1rem 1rem 0.5rem;
+    font-weight: bold;
+}
+
+.vehicle-item p {
+    color: #666;
+    margin: 0 1rem 1rem;
+    font-size: 0.9rem;
+}
+
+.vehicle-button {
+    background-color: transparent;
+    border: none;
+    color: #333;
+    display: block;
+    padding: 0.75rem 1rem;
+    margin: 0 1rem 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.3s;
+    font-size: 0.9rem;
+}
+
+/* Media Queries para pantallas más grandes */
+@media (min-width: 768px) {
+    .hero-section {
+        height: 400px;
+        flex-direction: row;
+    }
+    
+    .hero-image {
+        position: absolute;
+        height: 100%;
+    }
+    
+    .hero-content {
+        position: relative;
+        padding: 3rem;
+        max-width: 500px;
+        text-align: left;
+        align-items: flex-start;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1));
+    }
+    
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+    
+    .services-section {
+        flex-direction: row;
+        padding: 2rem;
+    }
+    
+    .service-item {
+        width: 30%;
+        margin-bottom: 0;
+    }
+    
+    .promo-section {
+        height: 300px;
+        flex-direction: row;
+    }
+    
+    .promo-image {
+        position: absolute;
+        height: 100%;
+    }
+    
+    .promo-content {
+        max-width: 50%;
+        text-align: left;
+        padding: 3rem;
+        background: none;
+    }
+    
+    .vehicle-list {
+        flex-direction: row;
+    }
+    
+    .vehicle-item {
+        width: calc(33.333% - 1rem);
+    }
+    
+    .brand-logos {
+        flex-wrap: nowrap;
+        gap: 2.5rem;
+    }
+    
+    .brand-logos img {
+        height: 40px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+    
+    .hero-content {
+        padding: 4rem;
+    }
+    
+    .brands-section h3 {
+        text-align: right;
+        padding-right: 3rem;
+    }
+    
+    .featured-vehicles {
+        padding: 2rem 3rem;
+    }
+}
