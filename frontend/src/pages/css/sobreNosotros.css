@@ -1,0 +1,342 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+.sobre-nosotros-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Banner diagonal rojo */
+.diagonal-banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 74px;
+    height: 100%;
+    background: linear-gradient(135deg, #9e1b1b 50%, transparent 50%);
+    z-index: 10;
+}
+
+/* Sección superior con fondo blanco */
+.top-white-section {
+    position: relative;
+    background-color: white;
+    padding: 190px 15% 220px;
+    /* Más espacio abajo para la imagen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+/* LA FILOSOFIA */
+.top-white-sections {
+    position: relative;
+    background-color: white;
+    padding: 130px 15% 80px;
+    /* Más espacio abajo para la imagen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.content-wrapper {
+    max-width: 800px;
+    text-align: center;
+}
+
+.titulo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    color: black;
+}
+
+.descripcion-principal {
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: center;
+    color: #333;
+}
+
+/* Imagen flotante - Posición ajustada más abajo */
+.imagen-flotante {
+    position: absolute;
+    right: 10%;
+    bottom: 30px;
+    /* Bajada más para que sobresalga menos */
+    width: 40%;
+    /* Reducido el tamaño */
+    max-width: 450px;
+    z-index: 20;
+}
+
+.vehiculo-imagen {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer rojo */
+.footer-banner {
+    background-color: #9e1b1b;
+    padding: 40px 15% 40px 15%;
+    color: white;
+    position: relative;
+    z-index: 5;
+}
+
+.footer-texto {
+    width: 55%;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Estilos para la seccion: Nuestra Mision */
+.nuestra-mision-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 80px 15%;
+    background-color: #f5f5f5;
+}
+
+.mision-image {
+    flex: 1;
+    max-width: 500px;
+    margin-right: 40px;
+}
+
+.mision-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.mision-content {
+    flex: 1;
+    max-width: 600px;
+}
+
+.mision-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.mision-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+
+/* Estilos para la sección: Nuestra Visión */
+.nuestra-vision-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 80px 15%;
+    background-color: #9e1b1b;
+}
+
+.vision-content {
+    flex: 1;
+    max-width: 600px;
+    margin-right: 40px;
+}
+
+.vision-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #f5f5f5;
+}
+
+.vision-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #f5f5f5;
+}
+
+.vision-image {
+    flex: 1;
+    max-width: 500px;
+}
+
+.vision-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    .imagen-flotante {
+        right: 8%;
+        width: 42%;
+        bottom: 35px;
+    }
+}
+
+@media (max-width: 992px) {
+    .top-white-section {
+        padding: 190px 10% 120px;
+    }
+
+    .imagen-flotante {
+        position: relative;
+        /* Cambiado de absolute a relative */
+        right: auto;
+        bottom: auto;
+        width: 80%;
+        margin: 20px auto 20px;
+        /* Margen inferior para separar del footer */
+        transform: none;
+    }
+
+    .footer-texto {
+        width: 65%;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+    }
+}
+
+/* Punto crítico donde cambiamos el diseño para móviles */
+@media (max-width: 768px) {
+    .diagonal-banner {
+        width: 50px;
+    }
+
+    .top-white-section {
+        padding: 180px 20px 30px;
+        /* Reducido el padding inferior */
+    }
+
+    .titulo {
+        font-size: 2rem;
+    }
+
+    /* Reposicionamos la imagen debajo del texto en lugar de encima del footer */
+    .imagen-flotante {
+        position: relative;
+        /* Cambiado de absolute a relative */
+        right: auto;
+        bottom: auto;
+        width: 80%;
+        margin: 20px auto 120px;
+        /* Margen inferior para separar del footer */
+        transform: none;
+    }
+
+    .footer-banner {
+        margin-top: -100px;
+        /* Compensar el margen de la imagen */
+    }
+
+    .footer-texto {
+        width: 100%;
+    }
+
+    .nuestra-vision-container {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+
+    .vision-content {
+        margin-right: 0;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .vision-title {
+        font-size: 1.8rem;
+    }
+
+    .vision-image {
+        max-width: 400px;
+    }
+
+    .nuestra-mision-container {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+
+    .mision-image {
+        margin-right: 0;
+        margin-bottom: 40px;
+        max-width: 400px;
+    }
+
+    .mision-content {
+        text-align: center;
+    }
+
+    .mision-title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .mision-title {
+        font-size: 1.6rem;
+    }
+
+    .mision-description {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .diagonal-banner {
+        width: 40px;
+    }
+
+    .titulo {
+        font-size: 1.8rem;
+    }
+
+    .descripcion-principal,
+    .footer-texto p {
+        font-size: 0.85rem;
+    }
+
+    .imagen-flotante {
+        width: 85%;
+        margin: 20px auto 100px;
+    }
+
+    .footer-banner {
+        margin-top: -80px;
+    }
+
+    .vision-title {
+        font-size: 1.6rem;
+    }
+
+    .vision-description {
+        font-size: 0.9rem;
+    }
+}
