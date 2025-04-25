@@ -32,7 +32,6 @@ export default function Home() {
 
             {/* Marcas Section */}
             <section className="brands-section">
-                <h3>Marcas</h3>
                 <div className="brand-logos">
                     <img src={NissanLogo} alt="Nissan" />
                     <img src={HondaLogo} alt="Honda" />

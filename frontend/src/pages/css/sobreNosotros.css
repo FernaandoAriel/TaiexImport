@@ -5,10 +5,6 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
-}
 
 .sobre-nosotros-container {
     position: relative;

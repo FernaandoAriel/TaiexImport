@@ -4,6 +4,25 @@
     max-width: 100%;
     overflow-x: hidden;
     color: #333;
+    animation: smoothAppear 0.8s ease-out;
+}
+
+h4 {
+    margin-left: 20px;
+}
+p{
+    margin-left: 20px;
+}
+
+@keyframes smoothAppear {
+    from { 
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Hero Section - Carro Gris */
@@ -23,6 +42,18 @@
     height: 200px;
     width: 100%;
     z-index: 1;
+    animation: gentleSlide 0.8s ease-out;
+}
+
+@keyframes gentleSlide {
+    from { 
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .hero-image img {
@@ -31,6 +62,11 @@
     object-fit: cover;
     object-position: center;
     opacity: 0.8;
+    transition: transform 0.4s ease;
+}
+
+.hero-image img:hover {
+    transform: scale(1.03);
 }
 
 .hero-content {
@@ -44,6 +80,18 @@
     align-items: center;
     text-align: center;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+    animation: contentReveal 0.8s ease-out;
+}
+
+@keyframes contentReveal {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-content h1 {
@@ -68,6 +116,13 @@
     border-radius: 4px;
     font-weight: 500;
     width: auto;
+    animation: subtlePulse 2s infinite;
+}
+
+@keyframes subtlePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
 }
 
 /* Brands Section */
@@ -83,6 +138,8 @@
     font-size: 1rem;
     color: #666;
     text-align: center;
+    animation: smoothAppear 0.8s ease-out;
+    width: 100%;
 }
 
 .brand-logos {
@@ -99,6 +156,11 @@
     width: auto;
     max-width: 100px;
     object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.brand-logos img:hover {
+    transform: scale(1.1);
 }
 
 /* Services Section */
@@ -117,17 +179,32 @@
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+.service-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .service-icon {
     font-size: 2rem;
     margin-bottom: 1rem;
     color: #333;
+    animation: gentleFloat 3s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
 }
 
 .service-item h3 {
     font-size: 1.1rem;
     color: #333;
+    text-align: center;
+    width: 100%;
 }
 
 /* Promo Section - Carro Azul */
@@ -146,6 +223,18 @@
     height: 200px;
     width: 100%;
     z-index: 1;
+    animation: gentleSlideRight 0.8s ease-out;
+}
+
+@keyframes gentleSlideRight {
+    from { 
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .promo-image img {
@@ -153,16 +242,11 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
+    transition: transform 0.4s ease;
 }
 
-.promo-image::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 60, 0.7), rgba(0, 0, 60, 0.5));
+.promo-image img:hover {
+    transform: scale(1.03);
 }
 
 .promo-content {
@@ -172,17 +256,7 @@
     width: 100%;
     text-align: center;
     background: rgba(0, 0, 60, 0.7);
-}
-
-.promo-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
-}
-
-.promo-content p {
-    font-size: 1rem;
-    line-height: 1.5;
+    animation: smoothAppear 0.8s ease-out;
 }
 
 /* Featured Vehicles Section */
@@ -199,6 +273,7 @@
     color: #333;
     border-bottom: 1px solid #ddd;
     padding-bottom: 0.75rem;
+    animation: smoothAppear 0.8s ease-out;
 }
 
 .vehicle-list {
@@ -213,7 +288,12 @@
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s;
+    transition: all 0.3s ease;
+}
+
+.vehicle-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .vehicle-item img {
@@ -222,18 +302,11 @@
     object-fit: contain;
     background-color: #f8f8f8;
     padding: 1rem;
+    transition: transform 0.4s ease;
 }
 
-.vehicle-item h4 {
-    font-size: 1.2rem;
-    margin: 1rem 1rem 0.5rem;
-    font-weight: bold;
-}
-
-.vehicle-item p {
-    color: #666;
-    margin: 0 1rem 1rem;
-    font-size: 0.9rem;
+.vehicle-item:hover img {
+    transform: scale(1.03);
 }
 
 .vehicle-button {
@@ -245,8 +318,13 @@
     margin: 0 1rem 1rem;
     cursor: pointer;
     text-align: left;
-    transition: color 0.3s;
+    transition: all 0.3s ease;
     font-size: 0.9rem;
+}
+
+.vehicle-button:hover {
+    color: #000;
+    transform: translateX(3px);
 }
 
 /* Media Queries para pantallas más grandes */

@@ -3,6 +3,7 @@ import './css/contactanos.css';
 
 const Contactanos = () => {
   return (
+   <div className="contactanos-container">
     <div className="contact-form-container">
       <h2 className="form-title">Ingresa tus datos</h2>
       <form>
@@ -29,6 +30,7 @@ const Contactanos = () => {
           Enviar ahora
         </button>
       </form>
+    </div>
     </div>
   );
 };
