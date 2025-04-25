@@ -3,7 +3,7 @@ import Home from "./pages/home.jsx"
 import Sobrenostros from "./pages/sobrenosotros.jsx"
 import Contactanos from "./pages/contactanos.jsx"
 import Navbar from "./components/navbar/navbarCliente.jsx"
-
+import InicioSesion from "./pages/inicioSesion.jsx"
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/sobrenosotros" element={<Sobrenostros />} />
         <Route path="/contactanos" element={<Contactanos />} /> 
+        <Route path="/login" element={<InicioSesion />} />
       </Routes>
     </Router>                                    
   );

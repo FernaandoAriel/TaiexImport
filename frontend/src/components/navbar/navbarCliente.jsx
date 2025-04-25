@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -288,6 +289,7 @@ export default function Navbar() {
     </div>
   );
 }
+
 
 // Componente para enlaces de navegación (Desktop - Barra blanca)
 function NavLink({ to, text }) {
