@@ -1,25 +1,21 @@
 import React from 'react';
 import './css/NavbarCatalogo.css'; // Asegúrate de que la ruta sea correcta
 
-const NavbarCatalogo = ({ activeCategory, setActiveCategory }) => {
-  const categories = ['Todos', 'Sedan', 'SUV', 'PickUp', 'Familiar', 'Coupe', 'Hatchback'];
-
+const NavbarCatalogo = ({ activeCategory, setActiveCategory, categories = ['Todos', 'Sedan', 'SUV', 'Hatchback', 'PickUp'] }) => {
   return (
-    <div className="catalogo-navbar-container">
-      <nav className="catalogo-navbar">
-        <div className="categories-container">
-          {categories.map(category => (
-            <button
-              key={category}
-              className={`category-btn ${activeCategory === category ? 'active' : ''}`}
-              onClick={() => setActiveCategory(category)}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-      </nav>
-    </div>
+    <nav className="navbar-catalogo">
+      <ul className="category-list">
+        {categories.map((category) => (
+          <li 
+            key={category}
+            className={activeCategory === category ? 'active' : ''}
+            onClick={() => setActiveCategory(category)}
+          >
+            {category}
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 
