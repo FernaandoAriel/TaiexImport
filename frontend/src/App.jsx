@@ -5,7 +5,7 @@ import Contactanos from "./pages/contactanos.jsx"
 import Navbar from "./components/navbar/navbarCliente.jsx"
 import InicioSesion from "./pages/inicioSesion.jsx"
 import Marcas from "./pages/Marcas.jsx"
-
+import Footer from "./components/footer/footerCliente.jsx"
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
         <Route path="/login" element={<InicioSesion />} />
         <Route path="/marcas" element={<Marcas />} />
       </Routes>
+      <Footer/>
     </Router>                                    
   );
 }
