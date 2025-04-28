@@ -9,6 +9,8 @@ import InicioSesion from "./pages/inicioSesion.jsx";
 import BrandCatalog from "./pages/BrandCatalog.jsx";
 import VehicleDetails from './pages/VehicleDetails.jsx';
 import Checkout from './pages/Checkout.jsx';
+import Footer from "./components/footer/footerCliente.jsx"
+
 
 function App() {
   return (
@@ -24,8 +26,10 @@ function App() {
           <Route path="/marcas/:brandName/:vehicleId" element={<VehicleDetails />} />
           <Route path="/checkout" element={<Checkout />} />
         </Routes>
+        <Footer/>
       </Router>
     </FavoritesProvider>
+
   );
 }
 
