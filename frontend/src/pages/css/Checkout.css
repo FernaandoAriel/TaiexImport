@@ -1,0 +1,237 @@
+/* Checkout.css */
+body{
+    background-color: white;
+    color: black;
+}
+.checkout-container {
+    display: flex;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 80px auto 0;
+    gap: 2rem;
+    margin-top: 200px;
+}
+
+.checkout-form {
+    flex: 1;
+    min-width: 0;
+}
+
+.payment-options {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.payment-logo {
+    height: 50px;
+    object-fit: contain;
+}
+
+.checkout-section {
+    margin-bottom: 2rem;
+}
+
+.checkout-section h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.payment-subtitle {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.checkout-form input[type="text"],
+.checkout-form input[type="email"] {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    background-color: white;
+}
+
+.name-fields {
+    display: flex;
+    gap: 1rem;
+}
+
+.name-fields input {
+    flex: 1;
+}
+
+.warehouse-selection {
+    margin-top: 1rem;
+}
+
+.warehouse-selection p {
+    margin-bottom: 0.5rem;
+}
+
+.warehouse-option {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+.warehouse-option input {
+    margin-right: 1rem;
+}
+
+.warehouse-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.warehouse-info p {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0;
+}
+
+.warehouse-fee {
+    font-weight: 600;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+.payment-method input {
+    margin-right: 1rem;
+}
+
+.card-logos {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: auto;
+}
+
+.card-logo,
+.paypal-logo {
+    height: 20px;
+    object-fit: contain;
+}
+
+.paypal-logo {
+    margin-left: auto;
+}
+
+.pay-button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #0078d4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.2s;
+}
+
+.pay-button:hover {
+    background-color: #0062a9;
+}
+
+.pay-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Order summary styles */
+.order-summary {
+    width: 380px;
+    background-color: #f0f0f0;
+    padding: 2rem;
+    border-radius: 4px;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.item-image-container {
+    position: relative;
+    width: 80px;
+    height: 60px;
+    margin-right: 1rem;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    background-color: white;
+}
+
+.item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-name {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.item-price {
+    font-weight: 600;
+}
+
+.order-totals {
+    margin-top: 2rem;
+}
+
+.total-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.final-total {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .checkout-container {
+        flex-direction: column-reverse;
+        padding: 1rem;
+    }
+
+    .order-summary {
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+
+    .name-fields {
+        flex-direction: column;
+        gap: 0;
+    }
+}
