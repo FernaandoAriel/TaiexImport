@@ -110,4 +110,4 @@ const Marcas = () => {
   );
 };
 
-export default Marcas;
+export default Marcas;  

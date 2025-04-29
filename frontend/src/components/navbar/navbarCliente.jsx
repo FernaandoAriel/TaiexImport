@@ -1,6 +1,14 @@
+// Navbar.jsx
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useFavorites } from '../../pages/FavoriteContext.jsx'; // Ajusta la ruta según tu estructura de archivos
 
+// Importamos imágenes de logos
+import NissanLogo from "../../pages/img/Nissan.png";
+import HondaLogo from "../../pages/img/Honda.png";
+import ToyotaLogo from "../../pages/img/Toyota.png";
+import LexusLogo from "../../pages/img/Lexus.png";
+import MitsubishiLogo from "../../pages/img/mitsubishi.png";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -8,6 +16,17 @@ export default function Navbar() {
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [favoritesMenuOpen, setFavoritesMenuOpen] = useState(false);
   const [cartMenuOpen, setCartMenuOpen] = useState(false);
+  const [brandsMenuOpen, setBrandsMenuOpen] = useState(false);
+  const { favorites, removeFromFavorites } = useFavorites();
+
+  // Definimos las marcas disponibles
+  const brands = [
+    { name: "Nissan", logo: NissanLogo, path: "/marcas/nissan" },
+    { name: "Honda", logo: HondaLogo, path: "/marcas/honda" },
+    { name: "Toyota", logo: ToyotaLogo, path: "/marcas/toyota" },
+    { name: "Lexus", logo: LexusLogo, path: "/marcas/lexus" },
+    { name: "Mitsubishi", logo: MitsubishiLogo, path: "/marcas/mitsubishi" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,23 +36,40 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Manejador para cerrar el menú de marcas al hacer clic fuera de él
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const brandsMenu = document.getElementById("brands-menu");
+      const brandsButton = document.getElementById("brands-button");
+
+      if (brandsMenu && brandsButton &&
+        !brandsMenu.contains(event.target) &&
+        !brandsButton.contains(event.target)) {
+        setBrandsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div className="navbar-container" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000 }}>
       {/* Línea superior blanca */}
-      <nav 
-        className={`navbar-top ${scrolled ? "scrolled" : ""}`} 
+      <nav
+        className={`navbar-top ${scrolled ? "scrolled" : ""}`}
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          backgroundColor: '#fff', 
+          backgroundColor: '#fff',
           padding: '1rem 2rem',
           boxShadow: scrolled ? '0 2px 10px rgba(0, 0, 0, 0.1)' : 'none',
         }}
       >
         {/* Logo */}
-        <Link 
-          to="/" 
+        <Link
+          to="/"
           style={{
             fontSize: '1.5rem',
             fontWeight: '600',
@@ -46,7 +82,7 @@ export default function Navbar() {
         </Link>
 
         {/* Menú para desktop */}
-        <div 
+        <div
           className="desktop-menu"
           style={{
             display: 'flex',
@@ -55,34 +91,125 @@ export default function Navbar() {
           }}
         >
           <NavLink to="/" text="Inicio" />
-          <NavLink to="/marcas" text="Marcas" />
-          <button 
+
+          {/* Botón de Marcas con menú desplegable */}
+          <div style={{ position: 'relative' }}>
+            <button
+              id="brands-button"
+              onClick={() => setBrandsMenuOpen(!brandsMenuOpen)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: 500,
+                fontSize: '1rem',
+                color: '#000',
+              }}
+            >
+              Marcas
+            </button>
+
+            {/* Menú desplegable de marcas */}
+            {brandsMenuOpen && (
+              <div
+                id="brands-menu"
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '320px',
+                  backgroundColor: 'white',
+                  borderRadius: '8px',
+                  boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
+                  padding: '1.5rem',
+                  marginTop: '10px',
+                  zIndex: 1002,
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gap: '1.5rem',
+                }}
+              >
+                {brands.map((brand, index) => (
+                  <Link
+                    key={index}
+                    to={brand.path}
+                    onClick={() => setBrandsMenuOpen(false)}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      textDecoration: 'none',
+                      padding: '0.8rem',
+                      borderRadius: '5px',
+                      transition: 'background-color 0.2s',
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
+                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                  >
+                    <img
+                      src={brand.logo}
+                      alt={`${brand.name} Logo`}
+                      style={{
+                        height: '40px',
+                        maxWidth: '100%',
+                        objectFit: 'contain',
+                        marginBottom: '0.5rem'
+                      }}
+                    />
+                    <span style={{ color: '#333', fontSize: '0.9rem' }}>{brand.name}</span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <button
             onClick={() => setFavoritesMenuOpen(!favoritesMenuOpen)}
-            style={{ 
-              background: 'none', 
-              border: 'none', 
+            style={{
+              background: 'none',
+              border: 'none',
               cursor: 'pointer',
-              fontSize: '1.5rem'
+              fontSize: '1.5rem',
+              position: 'relative'
             }}
           >
             ❤️
+            {favorites.length > 0 && (
+              <span style={{
+                position: 'absolute',
+                top: '-8px',
+                right: '-8px',
+                background: '#e74c3c',
+                color: 'white',
+                borderRadius: '50%',
+                width: '20px',
+                height: '20px',
+                fontSize: '0.8rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                {favorites.length}
+              </span>
+            )}
           </button>
-          <button 
+          <button
             onClick={() => setCartMenuOpen(!cartMenuOpen)}
-            style={{ 
-              background: 'none', 
-              border: 'none', 
+            style={{
+              background: 'none',
+              border: 'none',
               cursor: 'pointer',
               fontSize: '1.5rem'
             }}
           >
             🛒
           </button>
-          <button 
+          <button
             onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-            style={{ 
-              background: 'none', 
-              border: 'none', 
+            style={{
+              background: 'none',
+              border: 'none',
               cursor: 'pointer',
               fontSize: '1.5rem'
             }}
@@ -92,7 +219,7 @@ export default function Navbar() {
         </div>
 
         {/* Botón de menú móvil */}
-        <button 
+        <button
           className="mobile-menu-button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           style={{
@@ -111,7 +238,7 @@ export default function Navbar() {
       </nav>
 
       {/* Línea inferior negra */}
-      <div 
+      <div
         className="navbar-bottom"
         style={{
           display: 'flex',
@@ -133,7 +260,7 @@ export default function Navbar() {
       </div>
 
       {/* Menú móvil desplegable */}
-      <div 
+      <div
         className="mobile-menu"
         style={{
           display: mobileMenuOpen ? 'flex' : 'none',
@@ -156,7 +283,7 @@ export default function Navbar() {
       </div>
 
       {/* Menú de perfil deslizable */}
-      <div 
+      <div
         className="profile-menu"
         style={{
           position: 'fixed',
@@ -173,11 +300,11 @@ export default function Navbar() {
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
           <h2 style={{ margin: 0 }}>Mi Cuenta</h2>
-          <button 
+          <button
             onClick={() => setProfileMenuOpen(false)}
-            style={{ 
-              background: 'none', 
-              border: 'none', 
+            style={{
+              background: 'none',
+              border: 'none',
               cursor: 'pointer',
               fontSize: '1.5rem'
             }}
@@ -186,8 +313,8 @@ export default function Navbar() {
           </button>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <Link 
-            to="/login" 
+          <Link
+            to="/login"
             style={{
               padding: '1rem',
               backgroundColor: '#f5f5f5',
@@ -200,8 +327,8 @@ export default function Navbar() {
           >
             Iniciar Sesión
           </Link>
-          <Link 
-            to="/register" 
+          <Link
+            to="/register"
             style={{
               padding: '1rem',
               backgroundColor: '#000',
@@ -218,28 +345,29 @@ export default function Navbar() {
       </div>
 
       {/* Menú de favoritos deslizable */}
-      <div 
+      <div
         className="favorites-menu"
         style={{
           position: 'fixed',
           top: 0,
-          right: favoritesMenuOpen ? '0' : '-300px',
-          width: '300px',
+          right: favoritesMenuOpen ? '0' : '-350px',
+          width: '350px', // Un poco más ancho para mostrar mejor los items
           height: '100vh',
           backgroundColor: 'white',
           transition: 'right 0.3s ease',
           padding: '2rem',
           boxShadow: '0 0 10px rgba(0,0,0,0.1)',
           zIndex: 1001,
+          overflowY: 'auto' // Para permitir scroll si hay muchos favoritos
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
           <h2 style={{ margin: 0 }}>Favoritos</h2>
-          <button 
+          <button
             onClick={() => setFavoritesMenuOpen(false)}
-            style={{ 
-              background: 'none', 
-              border: 'none', 
+            style={{
+              background: 'none',
+              border: 'none',
               cursor: 'pointer',
               fontSize: '1.5rem'
             }}
@@ -248,12 +376,95 @@ export default function Navbar() {
           </button>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <p style={{ textAlign: 'center', color: '#666' }}>No hay productos en favoritos</p>
+          {favorites.length === 0 ? (
+            <p style={{ textAlign: 'center', color: '#666' }}>No hay productos en favoritos</p>
+          ) : (
+            favorites.map((vehicle) => (
+              <div
+                key={`${vehicle.brandName}-${vehicle.id}`}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  border: '1px solid #eee',
+                  borderRadius: '8px',
+                  padding: '1rem',
+                  position: 'relative'
+                }}
+              >
+                <button
+                  onClick={() => removeFromFavorites(vehicle.id, vehicle.brandName)}
+                  style={{
+                    position: 'absolute',
+                    top: '8px',
+                    right: '8px',
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '1.2rem',
+                    cursor: 'pointer',
+                    color: '#999'
+                  }}
+                >
+                  ×
+                </button>
+
+                <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.5rem' }}>
+                  <img
+                    src={vehicle.mainImage}
+                    alt={vehicle.name}
+                    style={{
+                      width: '70px',
+                      height: '50px',
+                      objectFit: 'cover',
+                      borderRadius: '4px'
+                    }}
+                  />
+                  <div>
+                    <h4 style={{ margin: '0 0 0.3rem 0', fontSize: '1rem' }}>{vehicle.name}</h4>
+                    <p style={{ margin: '0', fontSize: '0.9rem', color: '#666' }}>{vehicle.price}</p>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
+                  <Link
+                    to={`/marcas/${vehicle.brandName}/${vehicle.id}`}
+                    onClick={() => setFavoritesMenuOpen(false)}
+                    style={{
+                      fontSize: '0.8rem',
+                      textDecoration: 'none',
+                      color: '#666'
+                    }}
+                  >
+                    Ver detalles
+                  </Link>
+
+                  <Link
+                    to="/checkout"
+                    state={{ items: [vehicle] }}
+                    onClick={() => setFavoritesMenuOpen(false)}
+                    style={{
+                      padding: '0.3rem 0.8rem',
+                      background: '#c00',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      fontSize: '0.8rem',
+                      cursor: 'pointer',
+                      textDecoration: 'none',
+                      display: 'inline-block',
+                      textAlign: 'center'
+                    }}
+                  >
+                    Comprar
+                  </Link>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
 
       {/* Menú de carrito deslizable */}
-      <div 
+      <div
         className="cart-menu"
         style={{
           position: 'fixed',
@@ -270,11 +481,11 @@ export default function Navbar() {
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
           <h2 style={{ margin: 0 }}>Carrito</h2>
-          <button 
+          <button
             onClick={() => setCartMenuOpen(false)}
-            style={{ 
-              background: 'none', 
-              border: 'none', 
+            style={{
+              background: 'none',
+              border: 'none',
               cursor: 'pointer',
               fontSize: '1.5rem'
             }}
@@ -289,7 +500,6 @@ export default function Navbar() {
     </div>
   );
 }
-
 
 // Componente para enlaces de navegación (Desktop - Barra blanca)
 function NavLink({ to, text }) {
@@ -342,12 +552,3 @@ function MobileNavLink({ to, text, onClick }) {
     </Link>
   );
 }
-// CSS que podrías agregar en tu archivo de estilos
-// @media (max-width: 768px) {
-//   .desktop-menu {
-//     display: none !important;
-//   }
-//   .mobile-menu-button {
-//     display: block !important;
-//   }
-// }

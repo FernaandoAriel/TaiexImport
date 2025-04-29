@@ -1,5 +1,6 @@
 // Home.jsx
 import React from "react";
+import { Link } from "react-router-dom";
 import "./css/home.css";
 import CarroGris from "../pages/img/CarroGrisHome.jpg";
 import CarroAzul from "../pages/img/CarroAzulHome.jpg";
@@ -38,14 +39,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Marcas Section */}
+      {/* Marcas Section - Ahora con Links */}
       <section className="brands-section">
         <div className="brand-logos">
-          <img src={NissanLogo} alt="Nissan" />
-          <img src={HondaLogo} alt="Honda" />
-          <img src={ToyotaLogo} alt="Toyota" />
-          <img src={LexusLogo} alt="Lexus" />
-          <img src={MitsubishiLogo} alt="Mitsubishi" />
+          <Link to="/marcas/nissan">
+            <img src={NissanLogo} alt="Nissan" />
+          </Link>
+          <Link to="/marcas/honda">
+            <img src={HondaLogo} alt="Honda" />
+          </Link>
+          <Link to="/marcas/toyota">
+            <img src={ToyotaLogo} alt="Toyota" />
+          </Link>
+          <Link to="/marcas/lexus">
+            <img src={LexusLogo} alt="Lexus" />
+          </Link>
+          <Link to="/marcas/mitsubishi">
+            <img src={MitsubishiLogo} alt="Mitsubishi" />
+          </Link>
         </div>
       </section>
 
