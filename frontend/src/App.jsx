@@ -10,6 +10,7 @@ import BrandCatalog from "./pages/BrandCatalog.jsx";
 import VehicleDetails from './pages/VehicleDetails.jsx';
 import Checkout from './pages/Checkout.jsx';
 import Footer from "./components/footer/footerCliente.jsx"
+import Quote from './pages/Quote.jsx';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/marcas/:brandName" element={<BrandCatalog />} />
           <Route path="/marcas/:brandName/:vehicleId" element={<VehicleDetails />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/cotizar" element={<Quote />} />
         </Routes>
         <Footer/>
       </Router>
