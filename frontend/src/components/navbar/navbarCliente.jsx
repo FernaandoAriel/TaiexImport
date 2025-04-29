@@ -303,6 +303,7 @@ export default function Navbar() {
           <button
             onClick={() => setProfileMenuOpen(false)}
             style={{
+              color: '#000',
               background: 'none',
               border: 'none',
               cursor: 'pointer',
@@ -366,6 +367,7 @@ export default function Navbar() {
           <button
             onClick={() => setFavoritesMenuOpen(false)}
             style={{
+              color: '#000',
               background: 'none',
               border: 'none',
               cursor: 'pointer',
@@ -484,6 +486,7 @@ export default function Navbar() {
           <button
             onClick={() => setCartMenuOpen(false)}
             style={{
+              color: '#000',
               background: 'none',
               border: 'none',
               cursor: 'pointer',
