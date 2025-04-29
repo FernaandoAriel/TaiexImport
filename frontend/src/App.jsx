@@ -10,6 +10,8 @@ import BrandCatalog from "./pages/BrandCatalog.jsx";
 import VehicleDetails from './pages/VehicleDetails.jsx';
 import Checkout from './pages/Checkout.jsx';
 import Footer from "./components/footer/footerCliente.jsx"
+import Quote from './pages/Quote.jsx';
+import Registrer from './pages/Registrer.jsx';
 
 
 function App() {
@@ -22,9 +24,11 @@ function App() {
           <Route path="/sobrenosotros" element={<Sobrenostros />} />
           <Route path="/contactanos" element={<Contactanos />} /> 
           <Route path="/login" element={<InicioSesion />} />
+          <Route path="/register" element={<Registrer />} />
           <Route path="/marcas/:brandName" element={<BrandCatalog />} />
           <Route path="/marcas/:brandName/:vehicleId" element={<VehicleDetails />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/cotizar" element={<Quote />} />
         </Routes>
         <Footer/>
       </Router>
