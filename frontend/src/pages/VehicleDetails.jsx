@@ -15,7 +15,7 @@ const VehicleDetails = () => {
     const { brandName, vehicleId } = useParams();
     const [selectedImage, setSelectedImage] = useState(QashqaiMain);
     const { addToFavorites, favorites } = useFavorites();
-    
+
     // Verificar si este vehículo ya está en favoritos
     const isInFavorites = favorites.some(
         fav => fav.id === parseInt(vehicleId) && fav.brandName === brandName
@@ -131,12 +131,24 @@ const VehicleDetails = () => {
 
             {/* Call to Action */}
             <section className="vehicle-actions">
-                <button className="action-button primary">Cotizalo</button>
-                <button 
+                <Link
+                    to="/cotizar"
+                    state={{
+                        vehicle: {
+                            ...vehicleData,
+                            mainImage: QashqaiMain, // Aseguramos que la imagen principal se pase correctamente
+                            brandName: brandName
+                        }
+                    }}
+                    className="action-button primary"
+                >
+                    Cotizalo
+                </Link>
+                <button
                     className="action-button secondary"
                     onClick={handleAddToFavorites}
                     disabled={isInFavorites}
-                    style={{ 
+                    style={{
                         opacity: isInFavorites ? 0.7 : 1,
                         cursor: isInFavorites ? 'default' : 'pointer'
                     }}
