@@ -1,4 +1,9 @@
 # <span style="color:red">🔥 Taiex Import 🔥</span>
+
+<div align="center">
+  <img src="https://w0.peakpx.com/wallpaper/85/930/HD-wallpaper-gold-jdm-car-cars.jpg" alt="Banner del Proyecto">
+</div>
+
 ---
 
 ## <span style="color:red">👥 Integrantes del Equipo</span>
