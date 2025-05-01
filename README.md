@@ -6,17 +6,17 @@
 <table align="center">
   <tr>
     <td align="center" style="background-color:#f8f8f8; padding:10px; border:2px solid red">
-      <img src="https://via.placeholder.com/80/ff0000/ffffff?text=1" width="80px;" alt="Integrante 1"/><br />
+      <<br />
       <b>Fernando Ariel Morales Rodriguez - 20230032 - Coordinador </b><br>
       <small>Rol / Funciones</small>
     </td>
     <td align="center" style="background-color:#000000; padding:10px; border:2px solid white; color:white">
-      <img src="https://via.placeholder.com/80/ffffff/000000?text=2" width="80px;" alt="Integrante 2"/><br />
+      <br />
       <b>Kevin Josue Alvarado Hernandez - 20230361 - SubCoordinador </b><br>
       <small>Rol / Funciones</small>
     </td>
     <td align="center" style="background-color:#ffffff; padding:10px; border:2px solid black">
-      <img src="https://via.placeholder.com/80/000000/ff0000?text=3" width="80px;" alt="Integrante 3"/><br />
+      <br />
       <b>Jonathan Josue Valle Gamboa - 20230668 - Tesorero </b><br>
       <small>Rol / Funciones</small>
     </td>
@@ -129,5 +129,5 @@
 
 
 <div align="center">
-  <img src="https://via.placeholder.com/500x60/ff0000/ffffff?text=GRACIAS+POR+VISITAR" alt="Footer">
+  <img src="https://images.pexels.com/photos/18748231/pexels-photo-18748231.jpeg?cs=srgb&dl=pexels-wavyvisuals-377312923-18748231.jpg&fm=jpg" alt="Footer">
 </div>
