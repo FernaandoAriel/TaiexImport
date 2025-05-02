@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './css/Marcas.css';
 import NavbarCatalogo from '../components/navbar/NavbarCatalogo';
+import CardMarcas from '../components/CardMarcas';
 
 const Marcas = () => {
   const [activeCategory, setActiveCategory] = useState('Todos');
@@ -84,14 +85,7 @@ const Marcas = () => {
           
           <div className="marcas-grid">
             {getFilteredCars().map(car => (
-              <div key={car.id} className="marca-card">
-                <div className="car-image-placeholder">
-                  <div className="image-replacement">{car.name.charAt(0)}</div>
-                </div>
-                <h3>{car.name}</h3>
-                <p>{car.description}</p>
-                <span className="car-category">{car.category}</span>
-              </div>
+              <CardMarcas car={car} />
             ))}
           </div>
 

@@ -1,5 +1,5 @@
 import React from "react";
-import "./css/Register.css"; // Importa el archivo CSS para estilos personalizados
+import "./css/Register.css"; 
 
 const Registrer = () => {
   return (

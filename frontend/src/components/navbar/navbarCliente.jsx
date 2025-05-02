@@ -1,7 +1,8 @@
 // Navbar.jsx
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useFavorites } from '../../pages/FavoriteContext.jsx'; // Ajusta la ruta según tu estructura de archivos
+import { useFavorites } from '../../pages/FavoriteContext.jsx'; 
+import taiexLogo from '../../pages/img/taiexlogo.png';
 
 // Importamos imágenes de logos
 import NissanLogo from "../../pages/img/Nissan.png";
@@ -78,7 +79,7 @@ export default function Navbar() {
             alignItems: 'center',
           }}
         >
-          <img src="path/to/logo.png" alt="Logo" style={{ height: '40px', marginRight: '0.5rem' }} />
+          <img src={taiexLogo} alt="Logo" style={{ height: '60px', marginRight: '1.5rem' }} />
         </Link>
 
         {/* Menú para desktop */}

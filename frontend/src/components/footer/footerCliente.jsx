@@ -54,7 +54,7 @@ const Footer = () => {
       
       <div className="footer-bottom">
         <p>© 2025 Taiex Import. Todos los derechos reservados.</p>
-        <Link to="/terminos">Términos y condiciones</Link>
+        <Link to="">Términos y condiciones</Link>
       </div>
     </footer>
   );

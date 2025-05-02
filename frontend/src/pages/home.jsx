@@ -2,8 +2,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./css/home.css";
-import CarroGris from "../pages/img/CarroGrisHome.jpg";
-import CarroAzul from "../pages/img/CarroAzulHome.jpg";
+/*import CarroGris from "../pages/img/CarroGrisHome.jpg";*/
+import CarroGris2 from "../pages/img/CarroGrisHome2.jpg";
+import CarroNaranja from "../pages/img/CarroNaranjaHome.jpg";
+/*import CarroAzul from "../pages/img/CarroAzulHome.jpg";*/
 import NissanLogo from "../pages/img/Nissan.png";
 import HondaLogo from "../pages/img/Honda.png";
 import ToyotaLogo from "../pages/img/Toyota.png";
@@ -27,7 +29,7 @@ export default function Home() {
       <section
         className="hero-section"
         style={{
-          backgroundImage: `url(${CarroGris})`,
+          backgroundImage: `url(${CarroGris2})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -85,7 +87,7 @@ export default function Home() {
       {/* Promoción con el carro azul */}
       <section className="promo-section">
         <div className="promo-image">
-          <img src={CarroAzul} alt="Honda Civic 2024" />
+          <img src={CarroNaranja} alt="Honda Civic 2024" />
         </div>
         <div className="promo-content">
           <h3>Descubre el Honda Civic 2024</h3>
