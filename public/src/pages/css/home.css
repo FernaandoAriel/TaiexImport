@@ -1,15 +1,6 @@
 /* Importar la fuente Chivo de Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Chivo:wght@300;400;500;700;900&display=swap');
 
-/* Forzar ancho completo - Reset agresivo */
-html, body, #root, .App, .home-container, .hero-section {
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-}
 
 /* Variables de diseño */
 :root {
@@ -83,9 +74,8 @@ html, body, #root, .App, .home-container, .hero-section {
 
 /* Estilos base */
 .home-container {
-    width: 100%;
+    width: 100vw;
     overflow-x: hidden;
-    max-width: none; 
     background-color: white;
     animation: fadeIn 1s ease-out;
 }
@@ -250,7 +240,7 @@ h4, p {
 
 /* Brands Section - Mejorado con animaciones */
 .brands-section {
-    width: 100%;
+    width: 100vw;
     padding: 3rem 1rem;
     background-color: var(--light-color);
     text-align: center;
@@ -262,7 +252,6 @@ h4, p {
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     transform: translateY(-50px);
     animation: floatUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
-    max-width: 1800px;
 }
 
 @keyframes floatUp {

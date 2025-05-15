@@ -9,25 +9,28 @@
 
 
 .container {
-    background-image: url('../img/Fondo.png');
-
-    
+    background-image: url('../img/carrorojo2.jpg');
+    margin-top: 115px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
 }
 
 form {
     max-width: 600px;
     margin: 50px auto;
     padding: 30px;
-    background-color: rgba(255, 255, 255, 0.5); /* Blanco con 50% de opacidad */
-    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* Blanco con 50% de opacidad */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .form-control {
     width: 100%;
     height: 50px;
-    border-radius: 20px;
-    border: 2px solid #ddd;
     padding: 0 15px;
     margin-bottom: 20px;
     font-size: 16px;
@@ -69,7 +72,6 @@ form {
 .btn-primary {
     width: 100%;
     height: 50px;
-    border-radius: 40px;
     border: none;
     background-color: #8C1A1A;
     color: white;
@@ -118,12 +120,9 @@ body {
 
 .container {
     background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco con 50% de opacidad */
-    border-radius: 20px; /* Bordes redondeados para el contenedor */
-    padding: 20px; /* Espaciado interno */
 }
 
 .form-control {
     background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
     border: 1px solid black; /* Borde negro */
-    border-radius: 20px; /* Bordes redondeados para los inputs */
 }
