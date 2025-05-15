@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useFavorites } from '../pages/FavoriteContext.jsx';
-import VehicleHero from '../components/VehicleDetails/VehicleHero';
-import VehicleGallery from '../components/VehicleDetails/VehicleGallery';
-import VehicleInfoSection from '../components/VehicleDetails/VehicleInfoSection';
-import VehicleActions from '../components/VehicleDetails/VehicleActions';
-import VehicleRating from '../components/VehicleDetails/VehicleRating';
+import VehicleHero from '../components/VehicleDetails/VehicleHero.jsx';
+import VehicleGallery from '../components/VehicleDetails/VehicleGallery.jsx';
+import VehicleInfoSection from '../components/VehicleDetails/VehicleInfoSection.jsx';
+import VehicleActions from '../components/VehicleDetails/VehicleActions.jsx';
+import VehicleRating from '../components/VehicleDetails/VehicleRating.jsx';
 import './css/VehicleDetails.css';
 
 // Importa imágenes
