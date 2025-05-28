@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import usersController from "../controllers/Cusers.js";
+import usersController from "../controllers/Cuser.js";
 // Router() nos ayuda a colocar los metodos
 // que tendra mi ruta
 

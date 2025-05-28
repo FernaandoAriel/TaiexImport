@@ -9,7 +9,7 @@ import Sales from "./pages/sales-page.jsx";
 import EditSalePage from "./pages/edit-sale-page.jsx";
 import UserProfile from "./pages/users-page.jsx"; // Cambiado a mayúscula
 import EmployeesPage from "./pages/employees-page.jsx";
-import EditEmployeePage from "./pages/edit-employee-page.jsx";
+import EditEmployeePage from "./components/employeed/edit-employee-page.jsx";
 
 function App() {
   const [activePage, setActivePage] = useState("dashboard");

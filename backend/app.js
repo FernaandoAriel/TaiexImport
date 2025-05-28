@@ -7,18 +7,21 @@ import modelsRoutes from "./src/routes/Rmodels.js";
 import orderRoutes from "./src/routes/Rorder.js"
 import reviewsRoutes from "./src/routes/Rreviews.js";
 import vehiclesRoutes from "./src/routes/Rvehicles.js"
+import userRoutes from "./src/routes/Ruser.js";
 import cors from "cors";
 
-//configuro cors
+// Creo una constante que es igual a la libreria que importé
+const app = express();
+
+// Configuración de CORS
 const corsOptions = {
   origin: "http://localhost:5173", // Cambia esto por el origen de tu frontend
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
 
-
-// Creo una constante que es igual a la libreria que importé
-const app = express();
+// Aplicar middleware CORS con las opciones configuradas
+app.use(cors(corsOptions));
 
 //Que acepte datos en json
 app.use(express.json());
@@ -31,7 +34,7 @@ app.use("/api/Rmodels", modelsRoutes);
 app.use("/api/Rorder", orderRoutes);
 app.use("/api/Rreviews", reviewsRoutes);
 app.use("/api/Rvehicles", vehiclesRoutes);
-
+app.use("/api/Ruser", userRoutes);
 
 // Exporto la constante para poder usar express en otros archivos
 export default app;
