@@ -4,7 +4,7 @@ const router = express.Router();
 import brandController from "../controllers/Cbrand.js";
 // Router() nos ayuda a colocar los metodos
 // que tendra mi ruta
-
+router.get('/top-brand', brandController.getTopBrandAlternative); 
 
 router.route("/")
     .get(brandController.getbrand)
