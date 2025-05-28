@@ -7,7 +7,7 @@ import { useState } from "react";
 import Home from "./pages/home.jsx";
 import Purchases from "./pages/purchases-page.jsx";
 import Sales from "./pages/sales-page.jsx";
-import EditSalePage from "./pages/edit-sale-page.jsx";
+import EditSalePage from "./components/sales/edit-sale-page.jsx";
 import UserProfile from "./pages/users-page.jsx"; // Cambiado a mayúscula
 import EmployeesPage from "./pages/employees-page.jsx";
 import EditEmployeePage from "./components/employeed/edit-employee-page.jsx";
