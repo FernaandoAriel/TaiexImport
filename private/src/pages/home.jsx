@@ -2,7 +2,6 @@
 import { useState } from "react"
 
 //components
-import Sidebar from "../components/sidebar.jsx"
 import Header from "../components/header.jsx"
 import SalesChart from "../components/sales-chart.jsx"
 import TopBrands from "../components/top-brands.jsx"

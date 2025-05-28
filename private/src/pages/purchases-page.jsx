@@ -1,7 +1,6 @@
 // src/pages/purchases-page.jsx
 import BrandsList from "../components/brands-list.jsx"
 import TopCarsList from "../components/top-cars-list.jsx"
-import Sidebar from "../components/sidebar.jsx"
 
 export default function PurchasesPage() {
   return (
