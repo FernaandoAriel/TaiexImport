@@ -6,8 +6,15 @@ import likedRoutes from "./src/routes/Rliked.js";
 import modelsRoutes from "./src/routes/Rmodels.js";
 import orderRoutes from "./src/routes/Rorder.js"
 import reviewsRoutes from "./src/routes/Rreviews.js";
-import usersRoutes from "./src/routes/Rusers.js"
 import vehiclesRoutes from "./src/routes/Rvehicles.js"
+import cors from "cors";
+
+//configuro cors
+const corsOptions = {
+  origin: "http://localhost:5173", // Cambia esto por el origen de tu frontend
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
 
 
 // Creo una constante que es igual a la libreria que importé
@@ -23,7 +30,6 @@ app.use("/api/Rliked", likedRoutes);
 app.use("/api/Rmodels", modelsRoutes);
 app.use("/api/Rorder", orderRoutes);
 app.use("/api/Rreviews", reviewsRoutes);
-app.use("/api/Rusers", usersRoutes);
 app.use("/api/Rvehicles", vehiclesRoutes);
 
 

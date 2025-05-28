@@ -311,4 +311,5 @@ const BrandCatalog = () => {
     );
 };
 
+
 export default BrandCatalog;
