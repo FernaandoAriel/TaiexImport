@@ -1,0 +1,129 @@
+/* frontend/src/pages/css/Register.css */
+@import url('https://fonts.googleapis.com/css2?family=Chivo:wght@300;400;500;700;900&display=swap');
+
+* {
+    font-family: 'Chivo', sans-serif;
+    
+}
+
+
+
+.container {
+    background-image: url('../img/Fondo.png');
+
+    
+}
+
+form {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.5); /* Blanco con 50% de opacidad */
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-control {
+    width: 100%;
+    height: 50px;
+    border-radius: 20px;
+    border: 2px solid #ddd;
+    padding: 0 15px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: 2px solid #000000;
+    transition: transform 0.2s ease;
+}
+
+.form-control:focus {
+    transform: scale(1.02);
+    border-color: #8C1A1A;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-text {
+    color: #000000;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.form-text ul {
+    margin-top: 5px;
+    padding-left: 20px;
+}
+
+.form-check {
+    margin-bottom: 15px;
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+.btn-primary {
+    width: 100%;
+    height: 50px;
+    border-radius: 40px;
+    border: none;
+    background-color: #8C1A1A;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #ff0000;
+    transform: scale(1.02);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.text-center {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.fondo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 20px;
+        padding: 20px;
+    }
+}
+
+body {
+    background-image: url('ruta/a/tu/imagen.jpg'); /* Asegúrate de reemplazar con la ruta correcta de tu imagen */
+    background-size: cover;
+    background-position: center;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco con 50% de opacidad */
+    border-radius: 20px; /* Bordes redondeados para el contenedor */
+    padding: 20px; /* Espaciado interno */
+}
+
+.form-control {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con 80% de opacidad */
+    border: 1px solid black; /* Borde negro */
+    border-radius: 20px; /* Bordes redondeados para los inputs */
+}
