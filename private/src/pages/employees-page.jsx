@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Edit, Trash, FileText, Plus, ChevronDown } from "lucide-react"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react";
+import { Edit, Trash, FileText, Plus, ChevronDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function EmployeesPage() {
-  const navigate = useNavigate()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  
+  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const employees = [
     {
       id: 1,
@@ -19,7 +19,7 @@ export default function EmployeesPage() {
       startDate: "15/01/2020",
       status: "Activo",
       salary: "1500.00",
-      notes: "Empleado ejemplar"
+      notes: "Empleado ejemplar",
     },
     {
       id: 2,
@@ -31,7 +31,7 @@ export default function EmployeesPage() {
       startDate: "10/03/2021",
       status: "Activo",
       salary: "1200.00",
-      notes: "En periodo de prueba"
+      notes: "En periodo de prueba",
     },
     {
       id: 3,
@@ -43,7 +43,7 @@ export default function EmployeesPage() {
       startDate: "05/06/2018",
       status: "Activo",
       salary: "2500.00",
-      notes: "A cargo del departamento"
+      notes: "A cargo del departamento",
     },
     {
       id: 4,
@@ -55,7 +55,7 @@ export default function EmployeesPage() {
       startDate: "20/08/2019",
       status: "Activo",
       salary: "1800.00",
-      notes: "Especialista en motores"
+      notes: "Especialista en motores",
     },
     {
       id: 5,
@@ -67,22 +67,24 @@ export default function EmployeesPage() {
       startDate: "12/11/2022",
       status: "Activo",
       salary: "1300.00",
-      notes: "Atención al cliente"
+      notes: "Atención al cliente",
     },
-  ]
+  ];
 
   const handleEditEmployee = (employee) => {
-    navigate(`/employees/edit/${employee.id}`, { state: { employee } })
-  }
+    // Navegar a la página de edición pasando el empleado en el state
+    navigate("/edit-employee", { state: { employee } });
+  };
 
   const handleAddEmployee = () => {
-    navigate("/employees/add", { state: { employee: null } })
-  }
+    // Navegar a la página de edición sin empleado (para agregar nuevo)
+    navigate("/edit-employee", { state: { employee: null } });
+  };
 
   const handleDeleteEmployee = (employeeId) => {
     // Lógica para eliminar empleado
-    console.log("Eliminar empleado con ID:", employeeId)
-  }
+    console.log("Eliminar empleado con ID:", employeeId);
+  };
 
   return (
     <div className="flex h-screen bg-white">
@@ -92,47 +94,16 @@ export default function EmployeesPage() {
             <h2 className="text-xl font-medium">Gestión de Empleados</h2>
             <div className="flex space-x-2">
               <div className="relative">
-                <button 
+                <button
+                  onClick={() => {
+                    handleAddEmployee();
+                    setIsMenuOpen(false);
+                  }}
                   className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
-                  <Plus size={16} />
-                  <span>Empleado</span>
-                  <ChevronDown size={16} />
+                  Agregar Empleado
                 </button>
-                
-                {isMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                    <div className="py-1">
-                      <button
-                        onClick={() => {
-                          handleAddEmployee()
-                          setIsMenuOpen(false)
-                        }}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Agregar Empleado
-                      </button>
-                      <button
-                        onClick={() => {
-                          if (employees.length > 0) {
-                            handleEditEmployee(employees[0])
-                            setIsMenuOpen(false)
-                          }
-                        }}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Editar Empleado
-                      </button>
-                    </div>
-                  </div>
-                )}
               </div>
-              
-              <button className="flex items-center space-x-2 px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors">
-                <FileText size={16} />
-                <span>Reporte</span>
-              </button>
             </div>
           </div>
 
@@ -141,14 +112,30 @@ export default function EmployeesPage() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b">
-                    <th className="text-left py-3 px-4 text-red-600 font-medium">Nombre</th>
-                    <th className="text-left py-3 px-4 text-red-600 font-medium">Cargo</th>
-                    <th className="text-left py-3 px-4 text-red-600 font-medium">Departamento</th>
-                    <th className="text-left py-3 px-4 text-red-600 font-medium">Email</th>
-                    <th className="text-left py-3 px-4 text-red-600 font-medium">Teléfono</th>
-                    <th className="text-left py-3 px-4 text-red-600 font-medium">Fecha de Inicio</th>
-                    <th className="text-left py-3 px-4 text-red-600 font-medium">Estado</th>
-                    <th className="text-left py-3 px-4 text-red-600 font-medium">Acciones</th>
+                    <th className="text-left py-3 px-4 text-red-600 font-medium">
+                      Nombre
+                    </th>
+                    <th className="text-left py-3 px-4 text-red-600 font-medium">
+                      Cargo
+                    </th>
+                    <th className="text-left py-3 px-4 text-red-600 font-medium">
+                      Departamento
+                    </th>
+                    <th className="text-left py-3 px-4 text-red-600 font-medium">
+                      Email
+                    </th>
+                    <th className="text-left py-3 px-4 text-red-600 font-medium">
+                      Teléfono
+                    </th>
+                    <th className="text-left py-3 px-4 text-red-600 font-medium">
+                      Fecha de Inicio
+                    </th>
+                    <th className="text-left py-3 px-4 text-red-600 font-medium">
+                      Estado
+                    </th>
+                    <th className="text-left py-3 px-4 text-red-600 font-medium">
+                      Acciones
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -167,13 +154,13 @@ export default function EmployeesPage() {
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex space-x-2">
-                          <button 
-                            className="p-1 rounded-full bg-black text-white" 
+                          <button
+                            className="p-1 rounded-full bg-black text-white"
                             onClick={() => handleEditEmployee(employee)}
                           >
                             <Edit size={16} />
                           </button>
-                          <button 
+                          <button
                             className="p-1 rounded-full bg-black text-white"
                             onClick={() => handleDeleteEmployee(employee.id)}
                           >
@@ -190,5 +177,5 @@ export default function EmployeesPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
