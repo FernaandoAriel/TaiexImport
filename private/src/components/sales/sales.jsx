@@ -22,11 +22,11 @@ export default function SalesTable({ showHeader = true, showActions = true }) {
     useEffect(() => {
         const loadInitialData = async () => {
             try {
-                // Cargar opciones para los combobox
+                // Usar las rutas correctas del backend
                 const [customersRes, vehiclesRes, employeesRes] = await Promise.all([
-                    fetch('/api/customers'),
-                    fetch('/api/vehicles'),
-                    fetch('/api/users/employees')
+                    fetch('http://localhost:4000/api/Rcostumers'), // Ruta correcta
+                    fetch('http://localhost:4000/api/Rvehicles'),  // Ruta correcta
+                    fetch('http://localhost:4000/api/Ruser')       // Ruta correcta
                 ])
 
                 if (!customersRes.ok || !vehiclesRes.ok || !employeesRes.ok) {
@@ -35,17 +35,23 @@ export default function SalesTable({ showHeader = true, showActions = true }) {
 
                 const [customersData, vehiclesData, employeesData] = await Promise.all([
                     customersRes.json(),
-                    vehiclesRes.json(),
+                    vehiclesRes.json(),  
                     employeesRes.json()
                 ])
 
+                // Filtrar solo empleados si es necesario
+                const employees = Array.isArray(employeesData) 
+                    ? employeesData.filter(user => user.role === 'employee' || user.tipo === 'empleado')
+                    : employeesData
+
                 setOptions({
-                    customers: customersData,
-                    vehicles: vehiclesData,
-                    employees: employeesData,
+                    customers: Array.isArray(customersData) ? customersData : [],
+                    vehicles: Array.isArray(vehiclesData) ? vehiclesData : [],
+                    employees: Array.isArray(employees) ? employees : [],
                     loadingOptions: false
                 })
             } catch (error) {
+                console.error('Error loading options:', error)
                 toast.error(error.message)
                 setOptions(prev => ({ ...prev, loadingOptions: false }))
             }
@@ -54,39 +60,49 @@ export default function SalesTable({ showHeader = true, showActions = true }) {
         loadInitialData()
     }, [])
 
-    // Procesar datos de ventas
+    // Procesar datos de ventas - Usar los nombres correctos del populate
     useEffect(() => {
         if (Array.isArray(sales)) {
-            const processed = sales.map(sale => ({
-                id: sale._id,
-                date: sale.createdAt ? new Date(sale.createdAt).toLocaleDateString() : 'Fecha no disponible',
-                customer: sale.id_clientes 
-                    ? `${sale.id_clientes.nombre || sale.id_clientes.firsName || ''} ${sale.id_clientes.apellido || sale.id_clientes.lastName || ''}`.trim()
-                    : 'Cliente no disponible',
-                vehicle: sale.id_carros
-                    ? `${sale.id_carros.marca || ''} ${sale.id_carros.modelo || ''}`.trim()
-                    : 'Vehículo no disponible',
-                price: sale.id_carros?.precio 
-                    ? `$${sale.id_carros.precio.toLocaleString()}` 
-                    : 'Precio no disponible',
-                status: sale.Estado || 'Pendiente',
-                rawData: sale
-            }))
+            const processed = sales.map(sale => {
+                // El populate devuelve los datos en idCustomer e idVehicle
+                const customer = sale.idCustomer || sale.id_clientes
+                const vehicle = sale.idVehicle || sale.id_carros
+
+                return {
+                    id: sale._id,
+                    date: sale.createdAt ? new Date(sale.createdAt).toLocaleDateString() : 'Fecha no disponible',
+                    customer: customer 
+                        ? `${customer.nombre || customer.firsName || customer.firstName || ''} ${customer.apellido || customer.lastName || ''}`.trim()
+                        : 'Cliente no disponible',
+                    vehicle: vehicle
+                        ? `${vehicle.marca || ''} ${vehicle.modelo || ''}`.trim()
+                        : 'Vehículo no disponible',
+                    price: vehicle?.precio || vehicle?.price
+                        ? `$${(vehicle.precio || vehicle.price).toLocaleString()}` 
+                        : 'Precio no disponible',
+                    status: sale.Estado || 'Pendiente',
+                    rawData: sale
+                }
+            })
             setProcessedSales(processed)
         }
     }, [sales])
 
     const handleEditSale = (sale) => {
-        setSelectedSale(sale)
+        setSelectedSale(sale.rawData) // Pasar los datos completos
         setShowEditModal(true)
     }
 
     const handleSaveSale = async (updatedSale) => {
         try {
-            const response = await fetch(`/api/sales/${updatedSale._id}`, {
+            const response = await fetch(`http://localhost:4000/api/Rsales/${updatedSale._id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedSale)
+                body: JSON.stringify({
+                    idVehicle: updatedSale.idVehicle,
+                    idCustomer: updatedSale.idCustomer, 
+                    Estado: updatedSale.Estado
+                })
             })
             
             if (!response.ok) throw new Error('Error al guardar cambios')
@@ -95,6 +111,7 @@ export default function SalesTable({ showHeader = true, showActions = true }) {
             fetchSales()
             setShowEditModal(false)
         } catch (error) {
+            console.error('Error saving sale:', error)
             toast.error(error.message)
         }
     }
