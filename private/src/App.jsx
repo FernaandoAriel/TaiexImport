@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sidebar from "./components/sidebar.jsx"; // Asegúrate de que la ruta de importación sea correcta
 import { useState } from "react";
 
+
 // pages
 import Home from "./pages/home.jsx";
 import Purchases from "./pages/purchases-page.jsx";
@@ -19,6 +20,7 @@ function App() {
   };
 
   return (
+  
     <Router>
       <div className="flex">
         <Sidebar onNavigate={handleNavigate} activePage={activePage} />

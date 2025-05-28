@@ -12,10 +12,12 @@ import Checkout from './pages/Checkout.jsx';
 import Footer from "./components/footer/footerCliente.jsx"
 import Quote from './pages/Quote.jsx';
 import Registrer from './pages/Registrer.jsx';
+import { AuthProvider } from "./context/authContext.jsx";
 
 
 function App() {
   return (
+    <AuthProvider>
     <FavoritesProvider>
       <Router>
         <Navbar />
@@ -33,7 +35,7 @@ function App() {
         <Footer/>
       </Router>
     </FavoritesProvider>
-
+    </AuthProvider>
   );
 }
 
