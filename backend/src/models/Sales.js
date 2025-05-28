@@ -5,18 +5,18 @@
     Estado
 */
 
-import { Schema, model, ObjectId } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const salesSchema = new Schema(
     {
         idVehicle: {
-            type: ObjectId,
-            ref: "Vehicle",
+            type: Schema.Types.ObjectId,
+            ref: "Vehicles",
         },
 
         idCustomer: {
-            type: ObjectId,
-            ref: "Customer",
+            type: Schema.Types.ObjectId,
+            ref: "Customers",
         },
 
         state: {
