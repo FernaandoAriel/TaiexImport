@@ -2,11 +2,11 @@
 import { useState } from "react"
 
 //components
-import Header from "../components/header.jsx"
-import SalesChart from "../components/sales-chart.jsx"
-import TopBrands from "../components/top-brands.jsx"
-import TopModels from "../components/top-models.jsx"
-import Comments from "../components/comments.jsx"
+import Header from "../components/home/header.jsx"
+import SalesChart from "../components/home/sales-chart.jsx"
+import TopBrands from "../components/home/top-brands.jsx"
+import TopModels from "../components/home/top-models.jsx"
+import Comments from "../components/home/comments.jsx"
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("general")

@@ -1,90 +1,61 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import useDataEmployeed from "./hooks/useDataEmployeed.js"; // Asegúrate de que la ruta sea correcta
 
 export default function EditEmployeePage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const employee = location.state?.employee;
+  const employeeToEdit = location.state?.employee;
 
-  const [employeeData, setEmployeeData] = useState({
-    firstName: "",
-    lastName: "",
-    position: "",
-    department: "",
-    email: "",
-    phone: "",
-    startDate: "",
-    salary: "",
-    status: "",
-    notes: "",
-  });
+  const {
+    firstName,
+    setFirstName,
+    lastName,
+    setLastName,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    profilePicture,
+    setProfilePicture,
+    privilages,
+    setPrivilages,
+    editing,
+    handleSubmit,
+    setEmployeedToEdit
+  } = useDataEmployeed();
 
-  // Initialize form with employee data when component mounts or employee changes
+  // Solo inicializa el formulario una vez cuando el componente se monta
   useEffect(() => {
-    if (employee) {
-      // Split the full name into first and last name
-      const nameParts = employee.name ? employee.name.split(" ") : ["", ""];
-      const firstName = nameParts.slice(0, 2).join(" ");
-      const lastName = nameParts.slice(2).join(" ");
-
-      // Format date from DD/MM/YYYY to YYYY-MM-DD for input type="date"
-      const dateParts = employee.startDate
-        ? employee.startDate.split("/")
-        : ["", "", ""];
-      const formattedDate =
-        dateParts.length === 3
-          ? `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`
-          : "";
-
-      setEmployeeData({
-        firstName,
-        lastName,
-        position: employee.position || "",
-        department: employee.department || "",
-        email: employee.email || "",
-        phone: employee.phone || "",
-        startDate: formattedDate,
-        salary: employee.salary || "",
-        status: employee.status || "Activo",
-        notes: employee.notes || "",
-      });
+    if (employeeToEdit) {
+      setEmployeedToEdit(employeeToEdit);
     } else {
-      // Reset form for new employee
-      setEmployeeData({
-        firstName: "",
-        lastName: "",
-        position: "",
-        department: "",
-        email: "",
-        phone: "",
-        startDate: "",
-        salary: "",
-        status: "Activo",
-        notes: "",
-      });
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+      setProfilePicture("");
+      setPrivilages("");
     }
-  }, [employee]);
+  }, []); // 👈 ejecuta una sola vez al montar
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEmployeeData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log("Updated employee data:", employeeData);
-    // Here you would typically send the data to your backend
-    handleBack();
+    try {
+      await handleSubmit(e);
+      toast.success(editing ? "Empleado actualizado correctamente" : "Empleado creado correctamente");
+      navigate("/employees");
+    } catch (error) {
+      toast.error("Error al procesar la solicitud");
+    }
   };
 
   const handleBack = () => {
-    navigate("/employees"); // Navegar de vuelta a la página de empleados
+    navigate("/employees");
   };
 
   return (
@@ -98,13 +69,13 @@ export default function EditEmployeePage() {
             <ArrowLeft size={24} />
           </button>
           <h2 className="text-3xl font-bold text-gray-900">
-            {employee ? "Editar Empleado" : "Agregar Empleado"}
+            {editing ? "Editar Empleado" : "Agregar Empleado"}
           </h2>
         </div>
 
         <div className="bg-white rounded-xl shadow-lg p-8">
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleFormSubmit}
             className="grid grid-cols-1 lg:grid-cols-2 gap-8"
           >
             <div className="space-y-6">
@@ -119,8 +90,8 @@ export default function EditEmployeePage() {
                   id="firstName"
                   type="text"
                   name="firstName"
-                  value={employeeData.firstName}
-                  onChange={handleChange}
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   className="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-red-500 focus:border-red-500 transition-all"
                   required
                 />
@@ -136,51 +107,11 @@ export default function EditEmployeePage() {
                   id="lastName"
                   type="text"
                   name="lastName"
-                  value={employeeData.lastName}
-                  onChange={handleChange}
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                   className="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-red-500 focus:border-red-500 transition-all"
                   required
                 />
-              </div>
-              <div>
-                <label
-                  htmlFor="position"
-                  className="block text-base font-semibold text-gray-700 mb-2"
-                >
-                  Cargo
-                </label>
-                <input
-                  id="position"
-                  type="text"
-                  name="position"
-                  value={employeeData.position}
-                  onChange={handleChange}
-                  className="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-red-500 focus:border-red-500 transition-all"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="department"
-                  className="block text-base font-semibold text-gray-700 mb-2"
-                >
-                  Departamento
-                </label>
-                <select
-                  id="department"
-                  name="department"
-                  value={employeeData.department}
-                  onChange={handleChange}
-                  className="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-red-500 focus:border-red-500 transition-all"
-                  required
-                >
-                  <option value="">Seleccionar departamento</option>
-                  <option value="Ventas">Ventas</option>
-                  <option value="Administración">Administración</option>
-                  <option value="Servicio Técnico">Servicio Técnico</option>
-                  <option value="Marketing">Marketing</option>
-                  <option value="Recursos Humanos">Recursos Humanos</option>
-                </select>
               </div>
               <div>
                 <label
@@ -193,105 +124,75 @@ export default function EditEmployeePage() {
                   id="email"
                   type="email"
                   name="email"
-                  value={employeeData.email}
-                  onChange={handleChange}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-red-500 focus:border-red-500 transition-all"
                   required
                 />
               </div>
               <div>
                 <label
-                  htmlFor="phone"
+                  htmlFor="password"
                   className="block text-base font-semibold text-gray-700 mb-2"
                 >
-                  Teléfono
+                  Contraseña
                 </label>
                 <input
-                  id="phone"
-                  type="text"
-                  name="phone"
-                  value={employeeData.phone}
-                  onChange={handleChange}
+                  id="password"
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-red-500 focus:border-red-500 transition-all"
+                  required={!editing}
                 />
               </div>
             </div>
             <div className="space-y-6">
               <div>
                 <label
-                  htmlFor="startDate"
+                  htmlFor="profilePicture"
                   className="block text-base font-semibold text-gray-700 mb-2"
                 >
-                  Fecha de Inicio
+                  URL de Foto de Perfil
                 </label>
                 <input
-                  id="startDate"
-                  type="date"
-                  name="startDate"
-                  value={employeeData.startDate}
-                  onChange={handleChange}
-                  className="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-red-500 focus:border-red-500 transition-all"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="salary"
-                  className="block text-base font-semibold text-gray-700 mb-2"
-                >
-                  Salario
-                </label>
-                <input
-                  id="salary"
+                  id="profilePicture"
                   type="text"
-                  name="salary"
-                  value={employeeData.salary}
-                  onChange={handleChange}
+                  name="profilePicture"
+                  value={profilePicture}
+                  onChange={(e) => setProfilePicture(e.target.value)}
                   className="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-red-500 focus:border-red-500 transition-all"
                 />
               </div>
               <div>
                 <label
-                  htmlFor="status"
+                  htmlFor="privilages"
                   className="block text-base font-semibold text-gray-700 mb-2"
                 >
-                  Estado
+                  Privilegios
                 </label>
                 <select
-                  id="status"
-                  name="status"
-                  value={employeeData.status}
-                  onChange={handleChange}
+                  id="privilages"
+                  name="privilages"
+                  value={privilages}
+                  onChange={(e) => setPrivilages(e.target.value)}
                   className="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-red-500 focus:border-red-500 transition-all"
+                  required
                 >
-                  <option value="Activo">Activo</option>
-                  <option value="Inactivo">Inactivo</option>
-                  <option value="Vacaciones">Vacaciones</option>
-                  <option value="Permiso">Permiso</option>
+                  <option value="">Seleccionar privilegios</option>
+                  <option value="admin">Administrador</option>
+                  <option value="manager">Gerente</option>
+                  <option value="employee">Empleado</option>
+                  <option value="viewer">Solo lectura</option>
                 </select>
-              </div>
-              <div>
-                <label
-                  htmlFor="notes"
-                  className="block text-base font-semibold text-gray-700 mb-2"
-                >
-                  Notas
-                </label>
-                <textarea
-                  id="notes"
-                  name="notes"
-                  value={employeeData.notes}
-                  onChange={handleChange}
-                  rows={8}
-                  className="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-red-500 focus:border-red-500 transition-all resize-none"
-                ></textarea>
               </div>
               <div className="pt-6">
                 <button
                   type="submit"
                   className="w-full px-8 py-4 text-lg font-semibold bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-3 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 shadow-lg hover:shadow-xl"
                 >
-                  {employee ? "Guardar Cambios" : "Agregar Empleado"}
+                  {editing ? "Guardar Cambios" : "Agregar Empleado"}
                 </button>
               </div>
             </div>
@@ -301,4 +202,3 @@ export default function EditEmployeePage() {
     </div>
   );
 }
-

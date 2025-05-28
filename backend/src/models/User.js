@@ -8,7 +8,7 @@
        privilages
 */
 
-import { Schema, model, ObjectId } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const userSchema = new Schema(
     {
@@ -42,6 +42,11 @@ const userSchema = new Schema(
             type: String,
             require: true,
         },
-    });
+        
+    },
+    { timestamps: true,
+        strict: false,
+    }
+);
 
 export default model("User", userSchema);
