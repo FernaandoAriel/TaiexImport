@@ -59,12 +59,11 @@ export default function EmployeesPage() {
   } = useEmployeed();
 
   const handleEditEmployee = (employee) => {
-    selectEmployeedToEdit(employee);
-    navigate("/edit-employee");
+    navigate("/edit-employee", { state: { employee } });
   };
-
+  
   const handleAddEmployee = () => {
-    navigate("/edit-employee");
+    navigate("/edit-employee", { state: { employee: null } });
   };
 
   const handleDeleteEmployee = async (employeeId) => {

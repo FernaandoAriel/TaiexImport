@@ -12,6 +12,7 @@ const connection = mongoose.connection;
 // Veo si funciona
 connection.once("open", () => {
   console.log("DB is connected");
+
 });
 
 // Veo si se desconectó
