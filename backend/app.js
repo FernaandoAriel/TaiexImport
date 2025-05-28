@@ -8,6 +8,7 @@ import orderRoutes from "./src/routes/Rorder.js"
 import reviewsRoutes from "./src/routes/Rreviews.js";
 import vehiclesRoutes from "./src/routes/Rvehicles.js"
 import userRoutes from "./src/routes/Ruser.js";
+import salesRoutes from "./src/routes/Rsales.js"
 import cors from "cors";
 
 // Creo una constante que es igual a la libreria que importé
@@ -35,6 +36,8 @@ app.use("/api/Rorder", orderRoutes);
 app.use("/api/Rreviews", reviewsRoutes);
 app.use("/api/Rvehicles", vehiclesRoutes);
 app.use("/api/Ruser", userRoutes);
+
+app.use("/api/Rsales", salesRoutes);
 
 // Exporto la constante para poder usar express en otros archivos
 export default app;
