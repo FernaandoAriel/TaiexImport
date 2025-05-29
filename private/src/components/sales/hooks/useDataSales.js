@@ -1,26 +1,17 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
-/*
-    Campos:
-    id_carros
-    id_clientes
-    Estado
-*/
-
-const API = "http://localhost:4000/api/Rsales";
-
 const useDataSales = () => {
     const [id, setId] = useState(null);
-    const [id_carros, setIdCarros] = useState("");
-    const [id_clientes, setIdClientes] = useState("");
-    const [estado, setEstado] = useState("");
+    const [idVehicle, setIdVehicle] = useState("");
+    const [idCustomer, setIdCustomer] = useState("");
+    const [Estado, setEstado] = useState("");
     const [editing, setEditing] = useState(false);
 
     const cleanData = () => {
         setId(null);
-        setIdCarros("");
-        setIdClientes("");
+        setIdVehicle("");
+        setIdCustomer("");
         setEstado("");
         setEditing(false);
     }
@@ -32,25 +23,25 @@ const useDataSales = () => {
             return;
         }
 
-        console.log("configurando venta para editar", sale);
+        console.log("Datos de venta recibidos para edición:", sale);
 
+        // Maneja ambos formatos (nuevo y legacy)
         setId(sale._id || "");
-        setIdCarros(sale.id_carros || "");
-        setIdClientes(sale.id_clientes || "");
-        setEstado(sale.estado || "");
+        setIdVehicle(sale.idVehicle?._id || sale.idVehicle || sale.id_carros?._id || sale.id_carros || "");
+        setIdCustomer(sale.idCustomer?._id || sale.idCustomer || sale.id_clientes?._id || sale.id_clientes || "");
+        setEstado(sale.Estado || sale.estado || "");
         setEditing(true);
-
     };
 
     return {
         id,
-        id_carros,
-        id_clientes,
-        estado,
+        idVehicle,
+        idCustomer,
+        Estado,
         editing,
         cleanData,
         setSaleToEdit
     };
-
 }
+
 export default useDataSales;

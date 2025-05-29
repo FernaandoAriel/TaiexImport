@@ -7,19 +7,27 @@
 
 const salesController = {};
 import salesModel from "../models/Sales.js";
+import Vehicles from "../models/Vehicles.js";
 
 // SELECT
+// SELECT corregido
 salesController.getsales = async (req, res) => {
     try {
-      const sales = await salesModel.find()
-        .populate('idCustomer', 'firsName lastName nombre apellido email telefono')
-        .populate('idVehicle', 'year price marca modelo precio');
-      
-      console.log("Datos que se enviarán:", JSON.stringify(sales, null, 2));
-      res.json(sales);
+        const sales = await salesModel.find()
+            .populate({
+                path: 'idCustomer',
+                select: 'firstName lastName nombre apellido email telefono'
+            })
+            .populate({
+                path: 'idVehicle',
+                select: 'year price marca modelo', // Ahora tenemos estos campos virtuales
+                model: Vehicles
+            });
+        
+        res.json(sales);
     } catch (error) {
-      console.error("Error:", error);
-      res.status(500).json({ error: "Error al cargar ventas" });
+        console.error("Error:", error);
+        res.status(500).json({ error: "Error al cargar ventas" });
     }
 };
 

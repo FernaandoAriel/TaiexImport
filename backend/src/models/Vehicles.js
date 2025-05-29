@@ -12,38 +12,60 @@
 
 import { Schema, model, ObjectId } from "mongoose";
 
-const vehiclesSchema = new Schema(
-    {
+const vehiclesSchema = new Schema({
+    idModel: {
+        type: ObjectId,
+        ref: "Model",
+        required: true
+    },
+    year: {
+        type: Number,
+        required: true,
+    },
+    price: {
+        type: Number,
+        required: true,
+    },
+    carDetails: {
+        type: String,
+        required: true,
+    },
+    equipment: {
+        type: String,
+        required: true,
+    },
+    discount: {
+        type: Number,
+        required: true,
+    },
+    imgVehicle: {
+        type: String,
+        default: ""
+    }
+}, { 
+    timestamps: true,
+    toJSON: { virtuals: true }
+});
 
-        idModel: {
-            type: ObjectId,
-            ref: "Model",
-        },
+// Campos virtuales para marca y modelo
+vehiclesSchema.virtual('marca').get(function() {
+    return this.idModel?.idBrand?.brand || "Marca no disponible";
+});
 
-        year: {
-            type: Number,
-            require: true,
-        },
+vehiclesSchema.virtual('modelo').get(function() {
+    return this.idModel?.model || "Modelo no disponible";
+});
 
-        price: {
-            type: Number,
-            require: true,
-        },
-
-        carDetails: {
-            type: String,
-            require: true,
-        },
-
-        equipment: {
-            type: String,
-            require: true,
-        },
-
-        discount: {
-            type: Number,
-            require: true,
-        },
+// Middleware para populate automático
+vehiclesSchema.pre(/^find/, function(next) {
+    this.populate({
+        path: 'idModel',
+        populate: {
+            path: 'idBrand',
+            select: 'brand'
+        }
     });
+    next();
+});
 
-export default model("Vehicles", vehiclesSchema);
+export default model("Vehicle", vehiclesSchema);
