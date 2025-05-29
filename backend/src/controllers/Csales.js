@@ -83,4 +83,100 @@ salesController.updatesales = async (req, res) => {
     }
 };
 
+
+// Agregar este método al salesController existente (Csales.js)
+
+// GET TOP VEHICLES - Vehículos más vendidos
+salesController.getTopVehicles = async (req, res) => {
+    try {
+        const topVehicles = await salesModel.aggregate([
+            // Solo contar ventas completadas
+            { $match: { Estado: "Completada" } },
+            
+            // Agrupar por vehículo y contar
+            {
+                $group: {
+                    _id: "$idVehicle",
+                    totalSales: { $sum: 1 }
+                }
+            },
+            
+            // Ordenar por más vendidos
+            { $sort: { totalSales: -1 } },
+            
+            // Limitar a los top 10
+            { $limit: 10 },
+            
+            // Hacer lookup para obtener información del vehículo
+            {
+                $lookup: {
+                    from: "vehicles", // Nombre de la colección en MongoDB
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "vehicleInfo"
+                }
+            },
+            
+            // Descomponer el array de vehículos
+            { $unwind: "$vehicleInfo" },
+            
+            // Hacer lookup para obtener información del modelo
+            {
+                $lookup: {
+                    from: "models", // Nombre de la colección de modelos
+                    localField: "vehicleInfo.idModel",
+                    foreignField: "_id",
+                    as: "modelInfo"
+                }
+            },
+            
+            // Descomponer el array de modelos
+            { $unwind: "$modelInfo" },
+            
+            // Hacer lookup para obtener información de la marca
+            {
+                $lookup: {
+                    from: "brands", // Nombre de la colección de marcas
+                    localField: "modelInfo.idBrand",
+                    foreignField: "_id",
+                    as: "brandInfo"
+                }
+            },
+            
+            // Descomponer el array de marcas
+            { $unwind: "$brandInfo" },
+            
+            // Proyectar los datos que necesitamos
+            {
+                $project: {
+                    _id: 1,
+                    totalSales: 1,
+                    vehicleName: {
+                        $concat: [
+                            "$brandInfo.brand",
+                            " ",
+                            "$modelInfo.model",
+                            " ",
+                            { $toString: "$vehicleInfo.year" }
+                        ]
+                    },
+                    brand: "$brandInfo.brand",
+                    model: "$modelInfo.model",
+                    year: "$vehicleInfo.year",
+                    price: "$vehicleInfo.price",
+                    image: "$vehicleInfo.imgVehicle"
+                }
+            }
+        ]);
+
+        res.json(topVehicles);
+    } catch (error) {
+        console.error("Error getting top vehicles:", error);
+        res.status(500).json({ 
+            error: "Error al obtener vehículos más vendidos",
+            details: error.message 
+        });
+    }
+};
+
 export default salesController;

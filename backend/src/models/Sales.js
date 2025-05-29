@@ -11,7 +11,7 @@ const salesSchema = new Schema(
     {
       idVehicle: {
         type: Schema.Types.ObjectId,
-        ref: "Vehicles", // Debe coincidir exactamente con el nombre del modelo de vehículos
+        ref: "Vehicle", // CORREGIDO: Debe coincidir con el modelo exportado en Vehicles.js
         required: true
       },
       idCustomer: {

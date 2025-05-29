@@ -1,6 +1,8 @@
 //Array de metodos (C R U D)
 const brandController = {};
 import brandModel from "../models/Brand.js";
+import SalesModel from "../models/Sales.js"; // Ajusta la ruta según tu estructura
+
 import OrderModel from "../models/Order.js"; // Asegúrate de importar OrderModel
 import CarModel from "../models/Vehicles.js"; // Necesitarás esto para el lookup
 import { Types } from "mongoose"; // Para manejar ObjectId
@@ -45,17 +47,17 @@ brandController.updatebrand = async (req, res) => {
 };
 
 
-brandController.getTopBrandAlternative = async (req, res) => {
+brandController.getTopBrands = async (req, res) => {
     try {
-        const result = await OrderModel.aggregate([
-            // Separar cada objeto en el arreglo "order"
-            { $unwind: "$order" },
-
+        const result = await SalesModel.aggregate([
+            // Filtramos solo ventas completadas
+            { $match: { Estado: "Completada" } },
+            
             // Vincular con la colección de vehículos
             {
                 $lookup: {
-                    from: "vehicles", // Nombre real de tu colección de vehículos
-                    localField: "order.idVehicle",
+                    from: "vehicles",  // Nombre real de la colección
+                    localField: "idVehicle",
                     foreignField: "_id",
                     as: "vehicle"
                 }
@@ -65,7 +67,7 @@ brandController.getTopBrandAlternative = async (req, res) => {
             // Vincular con la colección de modelos
             {
                 $lookup: {
-                    from: "models", // Nombre real de tu colección de modelos
+                    from: "models",  // Nombre real de la colección
                     localField: "vehicle.idModel",
                     foreignField: "_id",
                     as: "model"
@@ -76,7 +78,7 @@ brandController.getTopBrandAlternative = async (req, res) => {
             // Vincular con la colección de marcas
             {
                 $lookup: {
-                    from: "brands", // Nombre real de tu colección de marcas
+                    from: "brands",  // Nombre real de la colección
                     localField: "model.idBrand",
                     foreignField: "_id",
                     as: "brand"
@@ -88,38 +90,24 @@ brandController.getTopBrandAlternative = async (req, res) => {
             {
                 $group: {
                     _id: "$brand._id",
-                    brandName: { $first: "$brand.brand" },
-                    totalSales: { $sum: 1 }
+                    brand: { $first: "$brand.brand" },
+                    image: { $first: "$brand.image" },
+                    salesCount: { $sum: 1 }
                 }
             },
 
-            // Ordenar por cantidad de ventas
-            { $sort: { totalSales: -1 } },
+            // Ordenar por cantidad de ventas (de mayor a menor)
+            { $sort: { salesCount: -1 } },
 
-            // Obtener solo la más vendida
-            { $limit: 1 }
+            // Limitar a 5 marcas
+            { $limit: 5 }
         ]);
 
-        // Si no hay resultados, responde con "Desconocida"
-        if (result.length === 0) {
-            return res.status(404).json({
-                brandName: "Desconocida",
-                totalSales: 0
-            });
-        }
-
-        const topBrand = result[0];
-
-        // Respuesta final con los nombres correctos
-        res.json({
-            brandName: topBrand.brandName,
-            totalSales: topBrand.totalSales
-        });
-
+        res.json(result);
     } catch (error) {
-        console.error("Error en getTopBrandAlternative:", error);
+        console.error("Error en getTopBrands:", error);
         res.status(500).json({
-            message: "Error al obtener la marca más vendida",
+            message: "Error al obtener las marcas más vendidas",
             error: error.message
         });
     }

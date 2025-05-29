@@ -1,7 +1,6 @@
 import { useState } from "react";
 import useBrand from "./hooks/useBrand";
 import useDataBrand from "./hooks/useDataBrand";
-import TopBrandCard from "./topBrands.jsx";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 export default function BrandsList() {
@@ -52,8 +51,6 @@ export default function BrandsList() {
 
   return (
     <div className="space-y-6">
-      {/* Tarjeta de marca más vendida */}
-      <TopBrandCard brands={brand} />
 
       {/* Controles superiores */}
       <div className="flex flex-col sm:flex-row justify-between gap-4">
