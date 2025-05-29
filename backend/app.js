@@ -34,7 +34,7 @@ app.use(express.json());
 
 // Definir las rutas de las funciones que tendrá la página web
 app.use("/api/Rbrand", brandRoutes);
-app.use("/api/Rcostumers", customersRoutes);
+app.use("/api/Rcustomers", customersRoutes);
 app.use("/api/Rliked", likedRoutes);
 app.use("/api/Rmodels", modelsRoutes);
 app.use("/api/Rorder", orderRoutes);

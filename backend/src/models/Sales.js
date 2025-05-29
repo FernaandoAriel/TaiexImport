@@ -11,12 +11,12 @@ const salesSchema = new Schema(
     {
       idVehicle: {
         type: Schema.Types.ObjectId,
-        ref: "vehicles", // Debe coincidir exactamente con el nombre del modelo de vehículos
+        ref: "Vehicles", // Debe coincidir exactamente con el nombre del modelo de vehículos
         required: true
       },
       idCustomer: {
         type: Schema.Types.ObjectId,
-        ref: "customers", // Debe coincidir exactamente con el nombre del modelo de clientes
+        ref: "Customer", // Debe coincidir exactamente con el nombre del modelo de clientes
         required: true
       },
       Estado: {
