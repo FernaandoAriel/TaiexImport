@@ -1,16 +1,16 @@
 import express from "express";
+import multer from "multer";
+import customersController from "../controllers/Ccustomers.js";
 
 const router = express.Router();
-import customersController from "../controllers/Ccustomers.js";
-// Router() nos ayuda a colocar los metodos
-// que tendra mi ruta
+const upload = multer({ dest: "uploads/" });
 
 router.route("/")
     .get(customersController.getcustomers)
-    .post(customersController.createcustomers);
+    .post(upload.single("profilePicture"), customersController.createcustomers);
 
 router.route("/:id")
-    .put(customersController.updatecustomers)
+    .put(upload.single("profilePicture"), customersController.updatecustomers)
     .delete(customersController.deletecustomers);
 
 export default router;
