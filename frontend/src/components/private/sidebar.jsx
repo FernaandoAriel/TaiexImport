@@ -6,7 +6,6 @@ function Sidebar() {
   const location = useLocation()
   const currentPath = location.pathname
 
-  // Función para verificar si la ruta activa coincide
   const isActive = (path) => {
     return currentPath.startsWith(`/admin${path}`)
   }

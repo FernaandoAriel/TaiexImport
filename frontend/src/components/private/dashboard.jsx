@@ -30,44 +30,36 @@ export default function Dashboard() {
   const [editingSale, setEditingSale] = useState(null)
   const [editingEmployee, setEditingEmployee] = useState(null)
 
-  // Function to handle sidebar navigation
   const handleNavigation = (page) => {
     setActivePage(page)
-    // Reset editing states when changing pages
     setEditingCar(null)
     setEditingUser(null)
     setEditingSale(null)
     setEditingEmployee(null)
   }
 
-  // Function to handle edit car
   const handleEditCar = (car) => {
     setEditingCar(car)
     setActivePage("edit-car")
   }
 
-  // Function to handle edit user
   const handleEditUser = (user) => {
     setEditingUser(user)
     setActivePage("edit-user")
   }
 
-  // Function to handle edit sale
   const handleEditSale = (sale) => {
     setEditingSale(sale)
     setActivePage("edit-sale")
   }
 
-  // Function to handle edit employee
   const handleEditEmployee = (employee) => {
     setEditingEmployee(employee)
     setActivePage("edit-employee")
   }
 
-  // Function to determine which add page to show based on current page
   const handleAddNew = () => {
     if (activePage === "dashboard") {
-      // For main dashboard, we could show a menu of options
       alert("Seleccione qué desea agregar desde las secciones específicas")
     } else if (activePage === "users") {
       setActivePage("user-profile")
@@ -80,7 +72,6 @@ export default function Dashboard() {
     }
   }
 
-  // Determine if the floating action button should be visible
   const showFloatingButton = ["dashboard", "users", "cars-inventory", "sales", "employees"].includes(activePage)
 
   return (
@@ -100,7 +91,7 @@ export default function Dashboard() {
                   <h2 className="text-xl font-medium text-red-600">Top Ventas</h2>
                   <button className="text-gray-500">
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns="http:www.w3.org/2000/svg"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -122,7 +113,7 @@ export default function Dashboard() {
                   <h2 className="text-xl font-medium text-red-600">Comentarios</h2>
                   <span className="text-gray-500">
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns="http:www.w3.org/2000/svg"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"

@@ -29,14 +29,12 @@ export default function EditEmployeePage() {
     loadEmployeeById
   } = useDataEmployeed();
 
-  // Cargar datos del empleado al montar el componente
   useEffect(() => {
     if (employeeToEdit) {
       setEmployeedToEdit(employeeToEdit);
     } else if (id) {
       loadEmployeeById(id);
     } else {
-      // Resetear campos para nuevo empleado
       resetForm();
     }
   }, [id, employeeToEdit]);
@@ -53,7 +51,6 @@ export default function EditEmployeePage() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     
-    // Validación básica
     if (!firstName || !lastName || !email || (!editing && !password)) {
       toast.error("Por favor complete todos los campos requeridos");
       return;
@@ -241,7 +238,7 @@ export default function EditEmployeePage() {
                   value={profilePicture}
                   onChange={(e) => setProfilePicture(e.target.value)}
                   className="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-3 focus:ring-red-500 focus:border-red-500 transition-all"
-                  placeholder="https://ejemplo.com/foto.jpg"
+                  placeholder="https:ejemplo.com/foto.jpg"
                 />
                 {profilePicture && (
                   <div className="mt-2">

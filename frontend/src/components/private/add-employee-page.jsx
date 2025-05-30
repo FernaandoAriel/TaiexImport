@@ -28,7 +28,6 @@ export default function AddEmployeePage({ onBack }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("Employee data submitted:", employeeData)
-    // Here you would typically send the data to your backend
     onBack()
   }
 

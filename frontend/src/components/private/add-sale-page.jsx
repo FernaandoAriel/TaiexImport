@@ -26,7 +26,6 @@ export default function AddSalePage({ onBack }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("Sale data submitted:", saleData)
-    // Here you would typically send the data to your backend
     onBack()
   }
 

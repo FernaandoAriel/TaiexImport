@@ -25,7 +25,6 @@ export default function AddCarPage({ onBack }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("Car data submitted:", carData)
-    // Here you would typically send the data to your backend
     onBack()
   }
 

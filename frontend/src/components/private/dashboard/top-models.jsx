@@ -1,4 +1,3 @@
-// src/components/TopCarsList.jsx
 import useSales from "./hooks/useSales";
 import { useEffect, useState } from "react";
 

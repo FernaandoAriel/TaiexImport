@@ -18,7 +18,7 @@ export default function BrandsList() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState("create"); // 'create' o 'edit'
+  const [modalType, setModalType] = useState("create"); 
 
   const filteredBrands = Array.isArray(brand)
     ? brand.filter((b) =>

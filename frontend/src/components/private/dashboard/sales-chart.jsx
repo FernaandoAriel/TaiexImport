@@ -24,9 +24,7 @@ export default function OrdersPredictionChart() {
     const ctx = chartRef.current.getContext("2d")
     if (!ctx) return
 
-    // Procesar los datos de órdenes
     const processOrdersData = () => {
-      // Agrupar órdenes por mes
       const ordersByMonth = {}
       
       orders.forEach(order => {
@@ -39,16 +37,14 @@ export default function OrdersPredictionChart() {
         ordersByMonth[monthYear]++
       })
 
-      // Convertir a arrays para el gráfico
       const labels = Object.keys(ordersByMonth)
       const data = Object.values(ordersByMonth)
 
-      // Generar predicción simple (promedio móvil de 3 meses)
       const predictions = []
       for (let i = 0; i < 3; i++) {
         const lastThreeMonths = data.slice(-3)
         const average = lastThreeMonths.reduce((sum, val) => sum + val, 0) / lastThreeMonths.length
-        predictions.push(Math.round(average * (1 + (i * 0.1)))) // Aumento del 10% cada mes
+        predictions.push(Math.round(average * (1 + (i * 0.1)))) 
       }
 
       return {
