@@ -1,7 +1,7 @@
 /*
     Campos:
-    id_carros
-    id_clientes
+    idVehicle (ObjectId - referencia a vehículos)
+    idCustomer (ObjectId - referencia a clientes)
     Estado
 */
 
@@ -9,14 +9,14 @@ import { Schema, model } from "mongoose";
 
 const salesSchema = new Schema(
     {
-      idVehicle: {  // Cambiado a idVehicle para coincidir con DB
+      idVehicle: {
         type: Schema.Types.ObjectId,
-        ref: "Vehicles", 
+        ref: "Vehicle", // CORREGIDO: Debe coincidir con el modelo exportado en Vehicles.js
         required: true
       },
-      idCustomer: {  // Cambiado a idCustomer para coincidir con DB
+      idCustomer: {
         type: Schema.Types.ObjectId,
-        ref: "Customers",
+        ref: "Customer", // Debe coincidir exactamente con el nombre del modelo de clientes
         required: true
       },
       Estado: {
@@ -27,6 +27,6 @@ const salesSchema = new Schema(
       }
     },
     { timestamps: true }
-  );
+);
 
 export default model("sales", salesSchema);

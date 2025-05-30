@@ -1,11 +1,15 @@
-//Array de metodos (C R U D)
 const UserController = {};
 import UserModel from "../models/User.js";
 
-// SELECT
+// SELECT - AGREGAR ESTE MÉTODO QUE FALTA
 UserController.getusers = async (req, res) => {
-    const users = await UserModel.find();
-    res.json(users);
+    try {
+        const users = await UserModel.find();
+        res.json(users);
+    } catch (error) {
+        console.error("Error getting users:", error);
+        res.status(500).json({ error: "Error al obtener usuarios" });
+    }
 };
 
 // INSERT
