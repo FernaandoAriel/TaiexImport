@@ -11,7 +11,7 @@ export const config = {
     },
     JWT: {
         secret: process.env.JWT_SECRET,
-        expires: process.env.JWT_EXPIRES,
+        expires: process.env.JWT_EXPIRE,
     },
     admin: {
         email: process.env.ADMIN_EMAIL,

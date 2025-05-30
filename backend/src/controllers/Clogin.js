@@ -3,63 +3,67 @@ import bcryptjs from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 import { config } from "../config.js";
 
-
 const loginController = {};
 
 loginController.login = async (req, res) => {
-
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-
     let userFound;
     let userType;
 
-    //1. Admin
-    if (
-      email === config.admin.email &&
-      password === config.admin.password
-    ) {
+    // 1. Verificar si es admin
+    if (email === config.admin.email && password === config.admin.password) {
       userType = "admin";
-      userFound = { _id: "admin" };
+      userFound = { 
+        _id: "admin",
+        email: config.admin.email,
+        name: "Administrador"
+      };
     } else {
-        //3. Cliente
-        userFound = await customerModel.findOne({ email });
-        userType = "customers";
+      // 2. Buscar como cliente
+      userFound = await customerModel.findOne({ email });
+      userType = "customers";
     }
 
-    //Si no encontramos a ningun usuario con esas credenciales
     if (!userFound) {
-      return res.json({ message: "User not found" });
+      return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    // Desencriptar contraseña
-    // SOLO SI NO ES ADMIN
+    // Verificar contraseña (excepto para admin)
     if (userType !== "admin") {
-      const isMatch = bcryptjs.compare(password, userFound.password);
+      const isMatch = await bcryptjs.compare(password, userFound.password);
       if (!isMatch) {
-        return res.json({ message: "Invalid password" });
+        return res.status(401).json({ message: "Contraseña incorrecta" });
       }
     }
 
-    //// TOKEN
-    //Para validar que inició sesión
+    // Crear token JWT
     jsonwebtoken.sign(
-      //1-Que voy a guardar
       { id: userFound._id, userType },
-      //2-Secreto
       config.JWT.secret,
-      //3-Cuando expira
       { expiresIn: config.JWT.expires },
-      //4. Funcion flecha
       (error, token) => {
-        if (error) console.log("error" + error);
-        res.cookie("authToken", token);
-        res.json({ message: "Login successful" });
+        if (error) {
+          console.error("Error al generar token:", error);
+          return res.status(500).json({ message: "Error interno del servidor" });
+        }
+        
+        res.json({ 
+          message: "Inicio de sesión exitoso",
+          token,
+          user: {
+            _id: userFound._id,
+            email: userFound.email,
+            name: userFound.name || userFound.email.split('@')[0]
+          },
+          userType
+        });
       }
     );
   } catch (error) {
-    console.log("error" + error);
+    console.error("Error en loginController:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
   }
 };
 
