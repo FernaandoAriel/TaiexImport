@@ -10,7 +10,6 @@ const useSales = () => {
     const [saleToEdit, setSaleToEdit] = useState(null);
 
     const normalizeSaleData = (sale) => {
-      // Normalizar la estructura del vehículo
       const vehicle = sale.idVehicle || sale.id_carros || {};
       
       return {
@@ -43,7 +42,6 @@ const useSales = () => {
                 throw new Error("Formato de datos inválido recibido del servidor");
             }
             
-            // Normaliza los datos antes de guardarlos
             const normalizedSales = data.map(normalizeSaleData);
             setSales(normalizedSales);
             
@@ -80,7 +78,6 @@ const useSales = () => {
     };
 
     const selectSaleToEdit = (sale) => {
-        // Normaliza los datos antes de pasarlos
         setSaleToEdit(normalizeSaleData(sale));
     };
 

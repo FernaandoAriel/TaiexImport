@@ -24,7 +24,6 @@ export default function UserProfilePage({ onBack }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("User data submitted:", userData)
-    // Here you would typically send the data to your backend
     onBack()
   }
 

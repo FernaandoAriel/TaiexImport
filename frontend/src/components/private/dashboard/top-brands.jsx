@@ -1,4 +1,3 @@
-// src/components/TopBrandsCard.jsx
 import useTopBrands from "./hooks/useTopBrand";
 
 export default function TopBrandsCard() {

@@ -25,7 +25,6 @@ const useDataSales = () => {
 
         console.log("Datos de venta recibidos para edición:", sale);
 
-        // Maneja ambos formatos (nuevo y legacy)
         setId(sale._id || "");
         setIdVehicle(sale.idVehicle?._id || sale.idVehicle || sale.id_carros?._id || sale.id_carros || "");
         setIdCustomer(sale.idCustomer?._id || sale.idCustomer || sale.id_clientes?._id || sale.id_clientes || "");
