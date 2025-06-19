@@ -5,7 +5,6 @@ import ServicesSection from "../../components/public/home/ServicesSection.jsx";
 import PromoSection from "../../components/public/home/PromoSection.jsx";
 import FeaturedVehicles from "../../components/public/home/FeaturedSection.jsx";
 import CarroGris2 from "./img/CarroGrisHome2.jpg";
-import CarroNaranja from "./img/CarroNaranjaHome.jpg";
 import NissanLogo from "./img/Nissan.png";
 import HondaLogo from "./img/Honda.png";
 import ToyotaLogo from "./img/Toyota.png";
@@ -59,11 +58,8 @@ export default function Home() {
       
       <ServicesSection />
       
-      <PromoSection
-        image={CarroNaranja}
-        title="Descubre el Honda Civic 2024"
-        description="El coche más innovador con prestaciones de primer nivel y características de alto rendimiento."
-      />
+      <PromoSection/>
+
       
       <FeaturedVehicles vehicles={featuredVehicles} />
     </div>
