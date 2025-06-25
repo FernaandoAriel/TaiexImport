@@ -12,8 +12,8 @@ export default function HeroSection({ backgroundImage }) {
       }}
     >
       <div className="hero-content">
-        <h1>Cotiza</h1>
-        <p>Encuentra tu coche ideal</p>
+        <h1>Taiex Import</h1>
+        <p>Encuentra tu coche ideal a los precios que necesites para tus preferencias</p>
         <button className="cta-button">Conoce más</button>
       </div>
     </section>

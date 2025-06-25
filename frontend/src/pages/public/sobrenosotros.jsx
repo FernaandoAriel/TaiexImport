@@ -1,56 +1,84 @@
-import React from 'react';
-import './css/sobreNosotros.css';
-import carroNegro from './img/carronegro.jpg';
-import carroFondo from './img/carrofondo.jpg';
-import carroRojo from './img/carrorojo.jpg';
+import React, { useState, useEffect } from 'react';
+import './css/sobreNosotros.css'
 
 const SobreNosotros = () => {
+  const [isVisible, setIsVisible] = useState({});
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setIsVisible(prev => ({
+            ...prev,
+            [entry.target.id]: true
+          }));
+        }
+      });
+    }, observerOptions);
+
+    // Observar elementos con animación
+    const elements = document.querySelectorAll('[data-animate]');
+    elements.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <><><div className="sobre-nosotros-container">
-      {/* Banner diagonal rojo */}
-      <div className="diagonal-banner"></div>
+    <>
 
-      {/* Sección superior con fondo blanco */}
-      <div className="top-white-section">
-        <div className="content-wrapper">
-          <h1 className="titulo">SOMOS TAIEX</h1>
+      <div className="sobre-nosotros-container">
+        {/* Banner diagonal rojo */}
+        <div className="diagonal-banner"></div>
 
-          <p className="descripcion-principal">
-            En Taiex Import, nuestra pasión son los vehículos asiáticos. Nos
-            especializamos en la importación de una amplia gama de
-            automóviles, desde sedanes elegantes hasta SUV robustos y
-            camionetas potentes, todos provenientes de los Estados Unidos.
-            Nuestra misión es brindar a nuestros clientes acceso a vehículos de
-            alta calidad, con un historial comprobado y a precios competitivos.
-          </p>
+        {/* Sección superior con fondo blanco */}
+        <div className="top-white-section">
+          <div className="content-wrapper">
+            <h1 className="titulo">SOMOS TAIEX</h1>
+            <p className="descripcion-principal">
+              En Taiex Import, nuestra pasión son los vehículos asiáticos. Nos
+              especializamos en la importación de una amplia gama de
+              automóviles, desde sedanes elegantes hasta SUV robustos y
+              camionetas potentes, todos provenientes de los Estados Unidos.
+              Nuestra misión es brindar a nuestros clientes acceso a vehículos de
+              alta calidad, con un historial comprobado y a precios competitivos.
+            </p>
+          </div>
+        </div>
+
+        {/* Imagen flotante */}
+        <div className="imagen-flotante">
+          <img
+            src="../src/pages/public/img/carronegro.jpg"
+            alt="Vehículo importado Taiex"
+            className="vehiculo-imagen"
+          />
+        </div>
+
+        {/* Footer rojo con texto */}
+        <div className="footer-banner">
+          <div className="footer-texto">
+            <p>
+              En Taiex Import, nuestra pasión son los vehículos asiáticos. Nos especializamos en la importación
+              de una amplia gama de automóviles, desde sedanes elegantes hasta SUV robustos y
+              camionetas potentes, todos provenientes de los Estados Unidos. Nuestra misión es brindar a
+              nuestros clientes acceso a vehículos de alta calidad, con un historial comprobado y a precios
+              competitivos.
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Imagen flotante */}
-      <div className="imagen-flotante">
-        <img
-          src={carroNegro}
-          alt="Vehículo importado Taiex"
-          className="vehiculo-imagen" />
-      </div>
-
-      {/* Footer rojo con texto */}
-      <div className="footer-banner">
-        <div className="footer-texto">
-          <p>
-            En Taiex Import, nuestra pasión son los vehículos asiáticos. Nos especializamos en la importación
-            de una amplia gama de automóviles, desde sedanes elegantes hasta SUV robustos y
-            camionetas potentes, todos provenientes de los Estados Unidos. Nuestra misión es brindar a
-            nuestros clientes acceso a vehículos de alta calidad, con un historial comprobado y a precios
-            competitivos.
-          </p>
-        </div>
-      </div>
-    </div>
-
-      <div className="nuestra-mision-container">
+      <div className="nuestra-mision-container" data-animate id="mision">
         <div className="mision-image">
-          <img src={carroRojo} alt="Vehículo importado" />
+          <img 
+            src="../src/pages/public/img/carrorojo.jpg" 
+            alt="Vehículo importado" 
+          />
         </div>
         <div className="mision-content">
           <h2 className="mision-title">Nuestra Misión</h2>
@@ -60,7 +88,7 @@ const SobreNosotros = () => {
         </div>
       </div>
 
-      <div className="nuestra-vision-container">
+      <div className="nuestra-vision-container" data-animate id="vision">
         <div className="vision-content">
           <h2 className="vision-title">Nuestra Visión</h2>
           <p className="vision-description">
@@ -71,14 +99,16 @@ const SobreNosotros = () => {
           </p>
         </div>
         <div className="vision-image">
-          <img src={carroFondo} alt="Vehículo importado" />
+          <img 
+            src="../src/pages/public/img/carrofondo.jpg" 
+            alt="Vehículo importado" 
+          />
         </div>
       </div>
       
-      </><div className="top-white-sections">
+      <div className="top-white-sections">
         <div className="content-wrapper">
-          <h1 className="titulo">LA FILOSOFÍA DEL EXITO</h1>
-s
+          <h1 className="titulo">LA FILOSOFÍA DEL ÉXITO</h1>
           <p className="descripcion-principal">
             En Taiex Import, nuestra filosofía se centra en la transparencia y la confianza, pilares que guían cada uno de 
             nuestros servicios: desde la importación directa y la rigurosa inspección de vehículos, hasta la gestión de trámites 
@@ -87,8 +117,8 @@ s
             nuestros clientes un equipo de expertos para garantizar su plena satisfacción.
           </p>
         </div>
-      </div></>
-
+      </div>
+    </>
   );
 };
 
