@@ -3,6 +3,7 @@ import { Edit, Trash, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import useEmployeed from "../../components/private/employeed/hooks/useEmployeed.js";
 import { toast } from "react-hot-toast";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 const EmployeedItem = ({ employee, onEdit, onDelete }) => {
   return (
@@ -59,6 +60,8 @@ export default function EmployeesPage() {
     deleteEmployeed,
     refreshEmployeed
   } = useEmployeed();
+  const { user } = useAuth();
+  const isEmployee = user?.privilages === 'employee' || user?.tipo === 'employee';
 
   const handleEditEmployee = (employee) => {
     navigate(`/admin/employees/edit/${employee._id}`, { 
@@ -86,54 +89,69 @@ export default function EmployeesPage() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-full">
-        <p>Cargando empleados...</p>
+      <div style={{ fontFamily: 'Lato, sans-serif', background: '#f8fafc', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ color: '#888', fontWeight: 600 }}>Cargando empleados...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex justify-center items-center h-full">
-        <p className="text-red-500">Error: {error}</p>
+      <div style={{ fontFamily: 'Lato, sans-serif', background: '#f8fafc', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p style={{ color: '#ef4444', fontWeight: 700 }}>Error: {error}</p>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden p-6">
-      <div className="space-y-6">
-        <div className="flex justify-between items-center"
-          style={{
-            marginLeft: "20px",
-            marginRight: "20px",
-            marginTop: "20px",
-            marginBottom: "20px"
-          }}>
-          <h2 className="text-xl font-medium">Gestión de Empleados</h2>
+    <div style={{ fontFamily: 'Lato, sans-serif', background: '#f8fafc', minHeight: '100vh', padding: '32px' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', background: '#fff', borderRadius: 18, boxShadow: '0 2px 8px #0001', padding: 32 }}>
+        <h2 style={{ fontSize: 28, fontWeight: 800, color: '#ef4444', letterSpacing: 0.5, marginBottom: 32 }}>Empleados</h2>
+        {!isEmployee && (
           <button
             onClick={handleAddEmployee}
-            className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+            style={{ background: 'linear-gradient(90deg,#ef4444,#f59e42)', color: '#fff', fontWeight: 700, borderRadius: 12, padding: '12px 28px', fontSize: 16, boxShadow: '0 2px 8px #0001', border: 'none', cursor: 'pointer', transition: 'background 0.2s', marginBottom: 24 }}
           >
-            <Plus size={16} />
-            <span>Agregar Empleado</span>
+            <Plus size={18} style={{ marginRight: 8, verticalAlign: -2 }} /> Agregar Empleado
           </button>
-        </div>
-
-        <div className="bg-white rounded-lg shadow p-6">
-          {employeed.length === 0 ? (
-            <p className="text-center text-gray-500">No hay empleados registrados</p>
+        )}
+        <div style={{ overflowX: 'auto' }}>
+          {loading ? (
+            <p style={{ color: '#888', fontWeight: 600 }}>Cargando empleados...</p>
+          ) : error ? (
+            <p style={{ color: '#ef4444', fontWeight: 700 }}>Error: {error}</p>
           ) : (
-            <div className="space-y-2">
-              {employeed.map((employee) => (
-                <EmployeedItem
-                  key={employee._id}
-                  employee={employee}
-                  onEdit={handleEditEmployee}
-                  onDelete={handleDeleteEmployee}
-                />
-              ))}
-            </div>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 16 }}>
+              <thead>
+                <tr style={{ background: '#f3f4f6' }}>
+                  <th style={{ textAlign: 'left', padding: '16px 12px', color: '#ef4444', fontWeight: 700 }}>Nombre</th>
+                  <th style={{ textAlign: 'left', padding: '16px 12px', color: '#ef4444', fontWeight: 700 }}>Correo</th>
+                  <th style={{ textAlign: 'left', padding: '16px 12px', color: '#ef4444', fontWeight: 700 }}>Privilegios</th>
+                  {!isEmployee && <th style={{ textAlign: 'left', padding: '16px 12px', color: '#ef4444', fontWeight: 700 }}>Acciones</th>}
+                </tr>
+              </thead>
+              <tbody>
+                {employeed.map((employee, idx) => (
+                  <tr key={employee._id} style={{ background: idx % 2 === 0 ? '#fff' : '#f9fafb', transition: 'background 0.2s' }}>
+                    <td style={{ padding: '14px 12px', fontWeight: 600 }}>{employee.firstName} {employee.lastName}</td>
+                    <td style={{ padding: '14px 12px' }}>{employee.email}</td>
+                    <td style={{ padding: '14px 12px' }}>{employee.privilages}</td>
+                    {!isEmployee && (
+                      <td style={{ padding: '14px 12px' }}>
+                        <div style={{ display: 'flex', gap: 8 }}>
+                          <button style={{ background: '#3b82f6', color: '#fff', borderRadius: 8, padding: '6px 12px', border: 'none', fontWeight: 700, cursor: 'pointer' }} onClick={() => handleEditEmployee(employee)}>
+                            <Edit size={16} />
+                          </button>
+                          <button style={{ background: '#ef4444', color: '#fff', borderRadius: 8, padding: '6px 12px', border: 'none', fontWeight: 700, cursor: 'pointer' }} onClick={() => handleDeleteEmployee(employee._id)}>
+                            <Trash size={16} />
+                          </button>
+                        </div>
+                      </td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
       </div>

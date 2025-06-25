@@ -83,6 +83,26 @@ salesController.updatesales = async (req, res) => {
     }
 };
 
+// Obtener ventas por cliente
+salesController.getSalesByCustomer = async (req, res) => {
+    try {
+        const { idCustomer } = req.params;
+        const sales = await salesModel.find({ idCustomer })
+            .populate({
+                path: 'idCustomer',
+                select: 'firstName lastName nombre apellido email telefono'
+            })
+            .populate({
+                path: 'idVehicle',
+                select: 'year price marca modelo',
+                model: Vehicles
+            });
+        res.json(sales);
+    } catch (error) {
+        console.error("Error al obtener ventas por cliente:", error);
+        res.status(500).json({ error: "Error al cargar ventas del cliente" });
+    }
+};
 
 // Agregar este método al salesController existente (Csales.js)
 

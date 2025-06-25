@@ -2,6 +2,7 @@ import customerModel from "../models/Customers.js";
 import bcryptjs from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 import { config } from "../config.js";
+import userModel from "../models/User.js";
 
 const loginController = {};
 
@@ -24,6 +25,11 @@ loginController.login = async (req, res) => {
       // 2. Buscar como cliente
       userFound = await customerModel.findOne({ email });
       userType = "customers";
+      // 3. Si no es cliente, buscar como empleado
+      if (!userFound) {
+        userFound = await userModel.findOne({ email });
+        userType = "employee";
+      }
     }
 
     if (!userFound) {
@@ -49,13 +55,21 @@ loginController.login = async (req, res) => {
           return res.status(500).json({ message: "Error interno del servidor" });
         }
         
+        // Datos de respuesta según tipo
+        let nombre = userFound.name || userFound.firstName || userFound.email?.split('@')[0];
+        let tipo = userType;
+        if (userType === 'employee') {
+          tipo = userFound.privilages || 'employee';
+        }
         res.json({ 
           message: "Inicio de sesión exitoso",
           token,
           user: {
             _id: userFound._id,
             email: userFound.email,
-            name: userFound.name || userFound.email.split('@')[0]
+            nombre,
+            tipo,
+            fechaRegistro: userFound.createdAt
           },
           userType
         });

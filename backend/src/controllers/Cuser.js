@@ -1,10 +1,11 @@
 const UserController = {};
 import UserModel from "../models/User.js";
+import bcryptjs from "bcryptjs";
 
 // SELECT - AGREGAR ESTE MÉTODO QUE FALTA
 UserController.getusers = async (req, res) => {
     try {
-        const users = await UserModel.find();
+        const users = await UserModel.find({}, { password: 0 });
         res.json(users);
     } catch (error) {
         console.error("Error getting users:", error);
@@ -16,11 +17,13 @@ UserController.getusers = async (req, res) => {
 UserController.createusers = async (req, res) => {
     const { firstName, lastName, email, password, profilePicture, privilages } =
         req.body;
+    // Hashear la contraseña antes de guardar
+    const passwordHash = await bcryptjs.hash(password, 10);
     const newusers = new UserModel({
         firstName,
         lastName,
         email,
-        password,
+        password: passwordHash,
         profilePicture,
         privilages,
     });
@@ -43,16 +46,13 @@ UserController.updateusers = async (req, res) => {
     const { firstName, lastName, email, password, profilePicture, privilages } =
         req.body;
     // Actualizo
+    let updateData = { firstName, lastName, email, profilePicture, privilages };
+    if (password) {
+        updateData.password = await bcryptjs.hash(password, 10);
+    }
     await UserModel.findByIdAndUpdate(
         req.params.id,
-        {
-            firstName,
-            lastName,
-            email,
-            password,
-            profilePicture,
-            privilages,
-        },
+        updateData,
         { new: true }
     );
     // muestro un mensaje que todo se actualizo

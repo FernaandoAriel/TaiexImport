@@ -24,6 +24,8 @@ import EditSalePage from "./components/private/sales/edit-sale-page.jsx";
 import UserProfile from "./pages/private/users-page.jsx";
 import EmployeesPage from "./pages/private/employees-page.jsx";
 import EditEmployeePage from "./components/private/employeed/edit-employee-page.jsx";
+import CreateEditUserPage from "./pages/private/create-edit-user-page.jsx";
+import VehiclesPage from "./pages/private/vehicles-page.jsx";
 
 const PrivateLayout = () => {
   const { isAuthenticated, userType } = useAuth();
@@ -50,6 +52,9 @@ const PrivateLayout = () => {
           <Route path="employees" element={<EmployeesPage />} />
           <Route path="employees/edit" element={<EditEmployeePage />} />
           <Route path="employees/edit/:id" element={<EditEmployeePage />} />
+          <Route path="users/create" element={<CreateEditUserPage />} />
+          <Route path="users/edit" element={<CreateEditUserPage />} />
+          <Route path="vehicles" element={<VehiclesPage />} />
         </Routes>
       </div>
     </div>
