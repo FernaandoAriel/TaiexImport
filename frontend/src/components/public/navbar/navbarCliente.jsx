@@ -1,9 +1,10 @@
 // Navbar.jsx
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useFavorites } from '../../../pages/public/FavoriteContext.jsx'; 
-import taiexLogo from '../../../pages/public/img/taiexLogo.png'; // Asegúrate de que la ruta sea correcta
-import { useAuth } from '../../../context/AuthContext.jsx'; // Asegúrate de que la ruta sea correcta
+import { useFavorites } from '../../../pages/public/FavoriteContext.jsx';
+import { useCart } from '../../../pages/public/cartContex.jsx'; // Asegúrate de que la ruta sea correcta
+import taiexLogo from '../../../pages/public/img/taiexLogo.png';
+import { useAuth } from '../../../context/AuthContext.jsx';
 import { User } from 'lucide-react';
 
 // Importamos imágenes de logos
@@ -26,6 +27,7 @@ export default function Navbar() {
   const [cartMenuOpen, setCartMenuOpen] = useState(false);
   const [brandsMenuOpen, setBrandsMenuOpen] = useState(false);
   const { favorites, removeFromFavorites } = useFavorites();
+  const { cart, removeFromCart } = useCart();
   const { user, logout, isAuthenticated } = useAuth();
 
   // Definimos las marcas disponibles
@@ -412,14 +414,14 @@ export default function Navbar() {
           position: 'fixed',
           top: 0,
           right: favoritesMenuOpen ? '0' : '-350px',
-          width: '350px', // Un poco más ancho para mostrar mejor los items
+          width: '350px',
           height: '100vh',
           backgroundColor: 'white',
           transition: 'right 0.3s ease',
           padding: '2rem',
           boxShadow: '0 0 10px rgba(0,0,0,0.1)',
           zIndex: 1001,
-          overflowY: 'auto' // Para permitir scroll si hay muchos favoritos
+          overflowY: 'auto'
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
@@ -498,26 +500,6 @@ export default function Navbar() {
                   >
                     Ver detalles
                   </Link>
-
-                  <Link
-                    to="/checkout"
-                    state={{ items: [vehicle] }}
-                    onClick={() => setFavoritesMenuOpen(false)}
-                    style={{
-                      padding: '0.3rem 0.8rem',
-                      background: '#c00',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '4px',
-                      fontSize: '0.8rem',
-                      cursor: 'pointer',
-                      textDecoration: 'none',
-                      display: 'inline-block',
-                      textAlign: 'center'
-                    }}
-                  >
-                    Comprar
-                  </Link>
                 </div>
               </div>
             ))
@@ -557,7 +539,90 @@ export default function Navbar() {
           </button>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <p style={{ textAlign: 'center', color: '#666' }}>No hay productos en el carrito</p>
+          {cart.length === 0 ? (
+            <p style={{ textAlign: 'center', color: '#666' }}>No hay productos en el carrito</p>
+          ) : (
+            <>
+              {cart.map((vehicle) => (
+                <div
+                  key={`${vehicle.brandName}-${vehicle.id}`}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    border: '1px solid #eee',
+                    borderRadius: '8px',
+                    padding: '1rem',
+                    position: 'relative'
+                  }}
+                >
+                  <button
+                    onClick={() => removeFromCart(vehicle.id, vehicle.brandName)}
+                    style={{
+                      position: 'absolute',
+                      top: '8px',
+                      right: '8px',
+                      background: 'none',
+                      border: 'none',
+                      fontSize: '1.2rem',
+                      cursor: 'pointer',
+                      color: '#999'
+                    }}
+                  >
+                    ×
+                  </button>
+                  <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.5rem' }}>
+                    <img
+                      src={vehicle.mainImage}
+                      alt={vehicle.name}
+                      style={{
+                        width: '70px',
+                        height: '50px',
+                        objectFit: 'cover',
+                        borderRadius: '4px'
+                      }}
+                    />
+                    <div>
+                      <h4 style={{ margin: '0 0 0.3rem 0', fontSize: '1rem' }}>{vehicle.name}</h4>
+                      <p style={{ margin: '0', fontSize: '0.9rem', color: '#666' }}>{vehicle.price}</p>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
+                    <Link
+                      to={`/marcas/${vehicle.brandName}/${vehicle.id}`}
+                      onClick={() => setCartMenuOpen(false)}
+                      style={{
+                        fontSize: '0.8rem',
+                        textDecoration: 'none',
+                        color: '#666'
+                      }}
+                    >
+                      Ver detalles
+                    </Link>
+                  </div>
+                </div>
+              ))}
+              <Link
+                to="/checkout"
+                state={{ items: cart }}
+                onClick={() => setCartMenuOpen(false)}
+                style={{
+                  marginTop: '1rem',
+                  padding: '0.7rem 1.2rem',
+                  background: '#c00',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '6px',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  textAlign: 'center'
+                }}
+              >
+                Comprar
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>

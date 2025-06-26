@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // <-- agrega useNavigate aquí
 import { useFavorites } from '../public/FavoriteContext.jsx';
+import { useCart } from '../public/cartContex.jsx';
 import VehicleHero from '../../components/public/VehicleDetails/VehicleHero.jsx';
 import VehicleGallery from '../../components/public/VehicleDetails/VehicleGallery.jsx';
 import VehicleInfoSection from '../../components/public/VehicleDetails/VehicleInfoSection.jsx';
-import VehicleActions from '../../components/public/VehicleDetails/VehicleActions.jsx';
 import VehicleRating from '../../components/public/VehicleDetails/VehicleRating.jsx';
+import { FiHeart, FiShoppingCart } from "react-icons/fi";
 import './css/VehicleDetails.css';
 
 const VehicleDetails = () => {
     const { brandName, vehicleId } = useParams();
+    const navigate = useNavigate(); // <-- inicializa navigate
     const { addToFavorites, favorites } = useFavorites();
+    const { addToCart, cart } = useCart();
     const [vehicle, setVehicle] = useState(null);
 
     useEffect(() => {
@@ -21,11 +24,6 @@ const VehicleDetails = () => {
 
     if (!vehicle) return <div>Cargando...</div>;
 
-    // Usar imgVehicle como imagen principal y en la galería si no hay más imágenes
-    const images = vehicle.images && vehicle.images.length > 0
-        ? vehicle.images
-        : [vehicle.imgVehicle];
-
     const vehicleData = {
         id: vehicle._id,
         brandName: brandName,
@@ -33,7 +31,7 @@ const VehicleDetails = () => {
         description: vehicle.carDetails,
         heroText: vehicle.heroText || "",
         sections: vehicle.sections || [],
-        images: images,
+        images: vehicle.images || [vehicle.imgVehicle],
         mainImage: vehicle.imgVehicle,
         rating: vehicle.rating || 0,
         price: vehicle.price,
@@ -46,9 +44,29 @@ const VehicleDetails = () => {
         fav => fav.id === vehicleData.id && fav.brandName === brandName
     );
 
+    const isInCart = cart.some(
+        item => item.id === vehicleData.id && item.brandName === brandName
+    );
+
     const handleAddToFavorites = () => {
         addToFavorites(vehicleData);
         alert("¡Añadido a favoritos!");
+    };
+
+    const handleAddToCart = () => {
+        addToCart(vehicleData);
+        alert("¡Añadido al carrito!");
+    };
+
+    const handleCotizar = () => {
+        navigate("/cotizar", {
+            state: {
+                vehicle: {
+                    ...vehicleData,
+                    brandName: brandName
+                }
+            }
+        });
     };
 
     return (
@@ -80,12 +98,73 @@ const VehicleDetails = () => {
                 />
             ))}
 
-            <VehicleActions 
-                vehicleData={vehicleData}
-                brandName={brandName}
-                isInFavorites={isInFavorites}
-                onAddToFavorites={handleAddToFavorites}
-            />
+            {/* Botones principales */}
+            <div
+                style={{
+                    display: "flex",
+                    gap: "1.5rem",
+                    marginTop: "2rem",
+                    marginBottom: "2rem",
+                    alignItems: "center",
+                    marginLeft: "calc(16vw + 16px)"
+                }}
+            >
+                <button
+                    style={{
+                        background: "#d50000",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "6px",
+                        padding: "0.8rem 2.2rem",
+                        fontWeight: 700,
+                        fontSize: "1.1rem",
+                        cursor: "pointer",
+                        boxShadow: "0 2px 8px rgba(213,0,0,0.08)",
+                        transition: "background 0.2s"
+                    }}
+                    onClick={handleCotizar}
+                >
+                    Cotízalo
+                </button>
+                <button
+                    style={{
+                        background: "#fff",
+                        color: "#222",
+                        border: "1px solid #ccc",
+                        borderRadius: "6px",
+                        padding: "0.8rem 2.2rem",
+                        fontWeight: 700,
+                        fontSize: "1.1rem",
+                        cursor: isInFavorites ? "not-allowed" : "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.6rem"
+                    }}
+                    onClick={handleAddToFavorites}
+                    disabled={isInFavorites}
+                >
+                    {isInFavorites ? "Agregado en favoritos" : "Añadir a Favoritos"} <FiHeart style={{ fontSize: "1.2rem" }} />
+                </button>
+                <button
+                    style={{
+                        background: "#fff",
+                        color: "#222",
+                        border: "1px solid #ccc",
+                        borderRadius: "6px",
+                        padding: "0.8rem 2.2rem",
+                        fontWeight: 700,
+                        fontSize: "1.1rem",
+                        cursor: isInCart ? "not-allowed" : "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.6rem"
+                    }}
+                    onClick={handleAddToCart}
+                    disabled={isInCart}
+                >
+                    {isInCart ? "Agregado en carrito" : "Agregar al carrito"} <FiShoppingCart style={{ fontSize: "1.2rem" }} />
+                </button>
+            </div>
 
             <VehicleRating rating={vehicleData.rating} />
 

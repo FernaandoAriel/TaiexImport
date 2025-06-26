@@ -14,6 +14,7 @@ import Checkout from './pages/public/Checkout.jsx';
 import Footer from "./components/public/footer/footerCliente.jsx";
 import Quote from './pages/public/Quote.jsx';
 import Registrer from './pages/public/Registrer.jsx';
+import { CartProvider } from "./pages/public/cartContex.jsx";
 
 // Componentes privados
 import Sidebar from "./components/private/sidebar.jsx";
@@ -89,12 +90,14 @@ function App() {
   return (
     <AuthProvider>
       <FavoritesProvider>
-        <Router>
-          <Routes>
-            <Route path="/*" element={<PublicLayout />} />
-            <Route path="/admin/*" element={<PrivateLayout />} />
-          </Routes>
-        </Router>
+        <CartProvider>
+          <Router>
+            <Routes>
+              <Route path="/*" element={<PublicLayout />} />
+              <Route path="/admin/*" element={<PrivateLayout />} />
+            </Routes>
+          </Router>
+        </CartProvider>
       </FavoritesProvider>
     </AuthProvider>
   );

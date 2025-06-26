@@ -1,13 +1,20 @@
-// FavoritesContext.jsx
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
-    const [favorites, setFavorites] = useState([]);
+    // Leer favoritos de localStorage al iniciar
+    const [favorites, setFavorites] = useState(() => {
+        const stored = localStorage.getItem('favorites');
+        return stored ? JSON.parse(stored) : [];
+    });
+
+    // Guardar favoritos en localStorage cuando cambien
+    useEffect(() => {
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+    }, [favorites]);
 
     const addToFavorites = (vehicle) => {
-        // Verificar si el vehículo ya está en favoritos
         if (!favorites.some(fav => fav.id === vehicle.id && fav.brandName === vehicle.brandName)) {
             setFavorites([...favorites, vehicle]);
         }
