@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useFavorites } from '../../../pages/public/FavoriteContext.jsx'; 
 import taiexLogo from '../../../pages/public/img/taiexLogo.png'; // Asegúrate de que la ruta sea correcta
+import { useAuth } from '../../../context/AuthContext.jsx';
+import { User } from 'lucide-react';
 
 // Importamos imágenes de logos
 import NissanLogo from "../../../pages/public/img/Nissan.png";
@@ -19,6 +21,7 @@ export default function Navbar() {
   const [cartMenuOpen, setCartMenuOpen] = useState(false);
   const [brandsMenuOpen, setBrandsMenuOpen] = useState(false);
   const { favorites, removeFromFavorites } = useFavorites();
+  const { user, logout, isAuthenticated } = useAuth();
 
   // Definimos las marcas disponibles
   const brands = [
@@ -206,17 +209,63 @@ export default function Navbar() {
           >
             🛒
           </button>
-          <button
-            onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '1.5rem'
-            }}
-          >
-            👤
-          </button>
+          {/* Menú de perfil de usuario */}
+          {isAuthenticated() && (
+            <div style={{ position: 'relative' }}>
+              <button
+                onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  fontSize: '1.2rem',
+                  color: '#000',
+                }}
+              >
+                <User size={24} />
+                <span style={{ fontWeight: 500 }}>{user?.firstName || 'Perfil'}</span>
+              </button>
+              {profileMenuOpen && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    right: 0,
+                    top: '110%',
+                    background: 'white',
+                    borderRadius: '8px',
+                    boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
+                    minWidth: '220px',
+                    zIndex: 1003,
+                    padding: '1rem',
+                  }}
+                >
+                  <div style={{ marginBottom: '0.5rem', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>
+                    <div style={{ fontWeight: 600 }}>{user?.firstName} {user?.lastName}</div>
+                    <div style={{ fontSize: '0.95rem', color: '#888' }}>{user?.email}</div>
+                  </div>
+                  <button
+                    onClick={logout}
+                    style={{
+                      width: '100%',
+                      background: '#ef4444',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '6px',
+                      padding: '0.5rem 0',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      marginTop: '0.5rem',
+                    }}
+                  >
+                    Cerrar sesión
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Botón de menú móvil */}

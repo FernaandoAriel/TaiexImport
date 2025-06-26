@@ -3,39 +3,18 @@ import TopCarsList from "../../components/private/brand/top-cars-list.jsx";
 
 export default function PurchasesPage() {
   return (
-    <div className="flex h-screen bg-white">
-      <div className="flex-1 flex flex-col overflow-hidden p-6">
-        <div className="flex justify-between items-center mb-6"
-        style={{
-          marginLeft: "20px",
-          marginRight: "20px",
-
-          marginTop: "10px",
-        }}>
-          <h2 className="text-xl font-medium">Gestión de Marcas</h2>
+    <div style={{ fontFamily: 'Lato, sans-serif', background: '#f8fafc', minHeight: '100vh', padding: '32px' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32 }}>
+          <h2 style={{ fontSize: 28, fontWeight: 800, color: '#ef4444', letterSpacing: 0.5 }}>Gestión de Marcas</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex justify-between items-center mb-6"
-            style={{
-              marginLeft: "20px",
-              marginRight: "20px",
-              
-              marginTop: "10px",
-            }}>
-              <h2 className="text-xl font-medium text-red-600">Marcas</h2>
-            </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
+          <div style={{ background: '#fff', borderRadius: 18, boxShadow: '0 2px 8px #0001', padding: 32 }}>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: '#ef4444', marginBottom: 24 }}>Marcas</h2>
             <BrandsList />
           </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-medium text-red-600 mb-6"
-            style={{
-              marginLeft: "20px",
-              marginRight: "20px",
-              
-              marginTop: "10px",
-            }}>Top Carros Vendidos</h2>
+          <div style={{ background: '#fff', borderRadius: 18, boxShadow: '0 2px 8px #0001', padding: 32 }}>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: '#3b82f6', marginBottom: 24 }}>Top Carros Vendidos</h2>
             <TopCarsList />
           </div>
         </div>

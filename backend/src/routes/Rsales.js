@@ -14,4 +14,7 @@ router.route("/:id")
 // NUEVA RUTA para obtener vehículos más vendidos
 router.get("/top-vehicles", salesController.getTopVehicles);
 
+// NUEVA RUTA para obtener ventas por cliente
+router.get("/customer/:idCustomer", salesController.getSalesByCustomer);
+
 export default router;

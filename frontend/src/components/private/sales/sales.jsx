@@ -18,17 +18,20 @@ export default function SalesTable({ showHeader = true, showActions = true }) {
     loadingOptions: true,
   });
 
+  // Cargar datos iniciales - CORREGIR LAS URLS
+  // En tu useEffect que carga los datos iniciales
   useEffect(() => {
     const loadInitialData = async () => {
       try {
         setOptions((prev) => ({ ...prev, loadingOptions: true }));
 
         const [customersRes, vehiclesRes, employeesRes] = await Promise.all([
-          fetch("http:localhost:4000/api/Rcustomers"),
-          fetch("http:localhost:4000/api/Rvehicles"),
-          fetch("http:localhost:4000/api/Ruser"),
+          fetch("http://localhost:4000/api/Rcustomers"),
+          fetch("http://localhost:4000/api/Rvehicles"),
+          fetch("http://localhost:4000/api/Ruser"),
         ]);
 
+        // Manejar respuesta de vehículos
         let vehiclesData = [];
         if (vehiclesRes.ok) {
           vehiclesData = await vehiclesRes.json();
@@ -62,6 +65,8 @@ export default function SalesTable({ showHeader = true, showActions = true }) {
     loadInitialData();
   }, []);
 
+  // Procesar datos de ventas
+  // Procesar datos de ventas - Versión corregida
   useEffect(() => {
     if (Array.isArray(sales)) {
       const processed = sales.map((sale) => {
@@ -89,7 +94,7 @@ export default function SalesTable({ showHeader = true, showActions = true }) {
   }, [sales]);
 
   const handleEditSale = (sale) => {
-    console.log("Editando venta:", sale.rawData);  
+    console.log("Editando venta:", sale.rawData); // Para debug
     setSelectedSale(sale.rawData);
     setShowEditModal(true);
   };
@@ -97,7 +102,7 @@ export default function SalesTable({ showHeader = true, showActions = true }) {
   const handleSaveSale = async (updatedSale) => {
     try {
       const response = await fetch(
-        `http:localhost:4000/api/Rsales/${updatedSale._id}`,
+        `http://localhost:4000/api/Rsales/${updatedSale._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
