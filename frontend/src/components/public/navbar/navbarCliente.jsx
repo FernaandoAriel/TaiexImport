@@ -210,6 +210,19 @@ export default function Navbar() {
               </span>
             )}
           </button>
+
+            <button
+            onClick={() => setProfileMenuOpen(!profileMenuOpen)}Add commentMore actions
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '1.5rem'
+            }}
+          >
+            👤
+          </button>
+
           <button
             onClick={() => setCartMenuOpen(!cartMenuOpen)}
             style={{
