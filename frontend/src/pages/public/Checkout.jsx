@@ -1,6 +1,6 @@
 // Checkout.jsx
-import React, { useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './css/Checkout.css';
 import VisaLogo from './img/visa.png';
 import PaypalLogo from './img/paypal.png';
@@ -12,18 +12,7 @@ import { toast } from 'react-hot-toast';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 
 const Checkout = () => {
-    const location = useLocation();
-    const { cart, clearCart } = useCart();
-    const { user, isAuthenticated } = useAuth();
-    if (!isAuthenticated() || !user?._id) {
-        return <div style={{padding: '2rem', color: '#ef4444', fontWeight: 700}}>Debes iniciar sesión para ver tu carrito y comprar.</div>;
-    }
-    const userCart = cart.filter(item => item.customerId === user._id);
-    const [showSuccess, setShowSuccess] = useState(false);
-    if (userCart.length === 0 && !showSuccess) {
-        return <div style={{padding: '2rem', color: '#888', fontWeight: 600}}>Tu carrito está vacío.</div>;
-    }
-
+    // 1. TODOS los hooks primero
     const [contactInfo, setContactInfo] = useState({
         email: "",
         name: "",
@@ -31,23 +20,45 @@ const Checkout = () => {
         address: "",
         region: ""
     });
-
     const [selectedWarehouse, setSelectedWarehouse] = useState(null);
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [step, setStep] = useState(1);
-
     const [cardInfo, setCardInfo] = useState({
         number: "",
         name: "",
         expiry: "",
         cvv: ""
     });
-
-    const transitionRef = useRef(null);
-
+    const [showSuccess, setShowSuccess] = useState(false);
     const [purchasedItems, setPurchasedItems] = useState([]);
+    const transitionRef = useRef(null);
+    const navigate = useNavigate();
 
-    // Calcular subtotal
+    // 2. Luego la lógica condicional
+    const location = useLocation();
+    const { cart, clearCart } = useCart();
+    const { user, isAuthenticated } = useAuth();
+    
+    if (!isAuthenticated() || !user?._id) {
+        return <div style={{padding: '2rem', color: '#ef4444', fontWeight: 700}}>Debes iniciar sesión para ver tu carrito y comprar.</div>;
+    }
+    
+    const userCart = cart.filter(item => item.customerId === user._id);
+    
+    // Usar useEffect para manejar la redirección
+    useEffect(() => {
+        if (userCart.length === 0 && !showSuccess) {
+            toast.error('Tu carrito está vacío. Redirigiendo al catálogo...');
+            navigate('/');
+        }
+    }, [userCart.length, showSuccess, navigate]);
+    
+    // Si el carrito está vacío, mostrar loading mientras se redirige
+    if (userCart.length === 0 && !showSuccess) {
+        return <div style={{padding: '2rem', textAlign: 'center'}}>Redirigiendo...</div>;
+    }
+
+    // 3. Calcular subtotal
     const subtotal = userCart.reduce((total, item) => total + Number(item.price), 0);
     const warehouseFee = selectedWarehouse ? selectedWarehouse.fee : 0;
     const total = subtotal + warehouseFee;
