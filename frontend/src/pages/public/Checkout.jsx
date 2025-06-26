@@ -9,7 +9,16 @@ import AmexLogo from './img/amex.png';
 
 const Checkout = () => {
     const location = useLocation();
-    const { items } = location.state || { items: [] };
+    const items = location.state?.items || [];
+
+    if (!items.length) {
+        return (
+            <div style={{ padding: 40, textAlign: 'center' }}>
+                <h2>No hay información para procesar el pago.</h2>
+                <button onClick={() => navigate('/')}>Volver al inicio</button>
+            </div>
+        );
+    }
 
     const [contactInfo, setContactInfo] = useState({
         email: '',
@@ -22,7 +31,7 @@ const Checkout = () => {
     const [paymentMethod, setPaymentMethod] = useState(null);
 
     // Calcular subtotal
-    const subtotal = items.reduce((total, item) => total + parseFloat(item.price.replace(/[^\d.]/g, '')), 0);
+    const subtotal = items.reduce((total, item) => total + Number(item.price), 0);
     const warehouseFee = selectedWarehouse ? selectedWarehouse.fee : 0;
     const total = subtotal + warehouseFee;
 
@@ -174,7 +183,9 @@ const Checkout = () => {
                         </div>
                         <div className="item-details">
                             <p className="item-name">{item.name}</p>
-                            <p className="item-price">${parseFloat(item.price.replace(/[^\d.]/g, '')).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</p>
+                            <p className="item-price">
+                                ${Number(item.price).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                            </p>
                         </div>
                     </div>
                 ))}

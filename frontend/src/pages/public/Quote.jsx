@@ -1,6 +1,5 @@
-// QuoteForm.jsx
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import './css/Quote.css';
 
 const QuoteForm = () => {
@@ -8,22 +7,18 @@ const QuoteForm = () => {
     const navigate = useNavigate();
     const { vehicle } = location.state || {};
 
-    // Obtener solo el nombre del modelo sin la marca
-    const modelName = vehicle?.name?.replace(`${vehicle?.brandName} `, '') || 'Qashqai';
+    // Si no hay datos del vehículo, muestra mensaje o redirige
+    if (!vehicle) {
+        return (
+            <div style={{ padding: 40, textAlign: 'center' }}>
+                <h2>No hay información para cotizar.</h2>
+                <button onClick={() => navigate('/')}>Volver al inicio</button>
+            </div>
+        );
+    }
 
-    const handleBuyClick = () => {
-        // Redirigir a la página de checkout con la información del vehículo
-        navigate('/checkout', {
-            state: {
-                items: [{
-                    ...vehicle,
-                    name: vehicle?.name || 'Nissan Qashqai',
-                    price: vehicle?.price || '35,000 USD',
-                    mainImage: vehicle?.mainImage
-                }]
-            }
-        });
-    };
+    // Obtener solo el nombre del modelo sin la marca
+    const modelName = vehicle?.name?.replace(`${vehicle?.brandName} `, '') || '';
 
     return (
         <div className="quote-container">
@@ -33,7 +28,7 @@ const QuoteForm = () => {
                         <label>Marca</label>
                         <input
                             type="text"
-                            value={vehicle?.brandName || 'Nissan'}
+                            value={vehicle?.brandName || ''}
                             disabled
                             className="disabled-input"
                         />
@@ -53,19 +48,26 @@ const QuoteForm = () => {
                         <label>Precio</label>
                         <input
                             type="text"
-                            value={vehicle?.price || '35,000 USD'}
+                            value={vehicle?.price || ''}
                             disabled
                             className="disabled-input"
                         />
                     </div>
 
-                    <button
-                        type="button"
+                    <Link
+                        to="/checkout"
+                        state={{
+                            items: [{
+                                ...vehicle,
+                                name: vehicle?.name,
+                                price: vehicle?.price,
+                                mainImage: vehicle?.mainImage
+                            }]
+                        }}
                         className="buy-button"
-                        onClick={handleBuyClick}
                     >
                         Comprar
-                    </button>
+                    </Link>
                 </div>
             </div>
 
@@ -73,7 +75,6 @@ const QuoteForm = () => {
                 {vehicle && vehicle.mainImage ? (
                     <img src={vehicle.mainImage} alt={vehicle.name} />
                 ) : (
-                    // Imagen por defecto si no hay vehículo
                     <div className="default-vehicle-bg"></div>
                 )}
             </div>
