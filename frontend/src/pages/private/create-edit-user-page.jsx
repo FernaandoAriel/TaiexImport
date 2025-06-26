@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
-const API = "http://localhost:4000/api/Ruser";
+const API = "http://localhost:4000/api/Rcustomers";
 
 export default function CreateEditUserPage() {
   const navigate = useNavigate();
