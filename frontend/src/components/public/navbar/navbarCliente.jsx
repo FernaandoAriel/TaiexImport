@@ -7,6 +7,7 @@ import taiexLogo from '../../../pages/public/img/taiexLogo.png';
 import { useAuth } from '../../../context/AuthContext.jsx';
 import { User } from 'lucide-react';
 
+
 // Importamos imágenes de logos
 import NissanLogo from "../../../pages/public/img/Nissan.png";
 import HondaLogo from "../../../pages/public/img/Honda.png";
@@ -219,18 +220,35 @@ export default function Navbar() {
             )}
           </button>
 
-        
-
           <button
             onClick={() => setCartMenuOpen(!cartMenuOpen)}
             style={{
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              fontSize: '1.5rem'
+              fontSize: '1.5rem',
+              position: 'relative'
             }}
           >
             🛒
+            {cart.length > 0 && (
+              <span style={{
+                position: 'absolute',
+                top: '-8px',
+                right: '-8px',
+                background: '#3b82f6',
+                color: 'white',
+                borderRadius: '50%',
+                width: '20px',
+                height: '20px',
+                fontSize: '0.8rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                {cart.length}
+              </span>
+            )}
           </button>
           {/* Botón de 👤 para iniciar sesión o menú de perfil de usuario */}
           {!isAuthenticated() ? (

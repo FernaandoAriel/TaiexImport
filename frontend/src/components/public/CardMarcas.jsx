@@ -1,7 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../../pages/public/cartContex.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { toast } from 'react-hot-toast';
 
 const CardMarcas = ({ car, brandName }) => {
+    const { addToCart, cart } = useCart();
+    const { user, isAuthenticated } = useAuth();
+    const vehicleData = {
+        id: car._id || car.id,
+        brandName: brandName,
+        name: car.modelo || car.name,
+        description: car.carDetails || car.description,
+        mainImage: car.imgVehicle,
+        price: car.price,
+        year: car.year,
+        equipment: car.equipment,
+        discount: car.discount,
+        customerId: user?._id || null
+    };
+    const isInCart = cart.some(item => item.id === vehicleData.id && item.brandName === brandName && item.customerId === user?._id);
+    const handleAddToCart = () => {
+        if (!isAuthenticated() || !user?._id) {
+            toast.error('Debes iniciar sesión para agregar al carrito.');
+            return;
+        }
+        addToCart(vehicleData);
+        toast.success('¡Añadido al carrito!');
+    };
+
     // Obtener el primer carácter del modelo para el placeholder
     const getModelInitial = () => {
         if (car.modelo) {
@@ -84,6 +111,27 @@ const CardMarcas = ({ car, brandName }) => {
                 >
                     CONOCE MÁS →
                 </Link>
+
+                {/* Botón 'Agregar al carrito' */}
+                <button
+                    style={{
+                        marginTop: '0.7rem',
+                        width: '100%',
+                        background: isInCart ? '#ccc' : '#d50000',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '6px',
+                        padding: '0.7rem 0',
+                        fontWeight: 700,
+                        fontSize: '1rem',
+                        cursor: isInCart ? 'not-allowed' : 'pointer',
+                        transition: 'background 0.2s'
+                    }}
+                    onClick={handleAddToCart}
+                    disabled={isInCart}
+                >
+                    {isInCart ? 'Agregado en carrito' : 'Agregar al carrito'}
+                </button>
             </div>
         </div>
     );
