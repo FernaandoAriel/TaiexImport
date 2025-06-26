@@ -13,6 +13,11 @@ import MitsubishiLogo from "./img/mitsubishi.png";
 import QashqaiImg from "./img/qashqai.png";
 import PathfinderImg from "./img/pathfinder.png";
 import CivicTypeRImg from "./img/civic-type-r.png";
+import Kialogo from "./img/kialogo.png";
+import SuzukiLogo from "./img/suzukilogo.png";
+import HyundaiLogo from "./img/hyundaulogo.png";
+import MazdaLogo from "./img/mazdalogo.png";
+import SubaruLogo from "./img/subarulogo.png";
 import "./css/home.css";
 
 export default function Home() {
@@ -22,6 +27,11 @@ export default function Home() {
     { id: 3, name: "Toyota", logo: ToyotaLogo },
     { id: 4, name: "Lexus", logo: LexusLogo },
     { id: 5, name: "Mitsubishi", logo: MitsubishiLogo },
+    { id: 6, name: "Kia", logo: Kialogo },
+    { id: 7, name: "Suzuki", logo: SuzukiLogo },
+    { id: 8, name: "Hyundai", logo: HyundaiLogo },
+    { id: 9, name: "Mazda", logo: MazdaLogo },
+    { id: 10, name: "Subaru", logo: SubaruLogo },
   ];
 
   const featuredVehicles = [

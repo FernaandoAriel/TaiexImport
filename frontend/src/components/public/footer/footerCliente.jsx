@@ -12,18 +12,18 @@ const Footer = () => {
           <h3>Nuestras marcas</h3>
           <div className="brands-grid">
             <div className="brands-column">
-              <Link to="/marcas">Nissan</Link>
-              <Link to="/marcas">Honda</Link>
-              <Link to="/marcas/">Toyota</Link>
-              <Link to="/marcas/">Lexus</Link>
-              <Link to="/marcas/">Mitsubishi</Link>
+              <Link to="/marcas/nissan">Nissan</Link>
+              <Link to="/marcas/honda">Honda</Link>
+              <Link to="/marcas/toyota">Toyota</Link>
+              <Link to="/marcas/lexus">Lexus</Link>
+              <Link to="/marcas/mitsubishi">Mitsubishi</Link>
             </div>
             <div className="brands-column">
-              <Link to="/marcas/">Kia</Link>
-              <Link to="/marcas/">Suzuki</Link>
-              <Link to="/marcas/">Hyundai</Link>
-              <Link to="/marcas/">Mazda</Link>
-              <Link to="/marcas/">Subaru</Link>
+              <Link to="/marcas/kia">Kia</Link>
+              <Link to="/marcas/suzuki">Suzuki</Link>
+              <Link to="/marcas/hyundai">Hyundai</Link>
+              <Link to="/marcas/mazda">Mazda</Link>
+              <Link to="/marcas/subaru">Subaru</Link>
             </div>
           </div>
         </div>
@@ -53,8 +53,10 @@ const Footer = () => {
       </div>
       
       <div className="footer-bottom">
-        <p>© 2025 Taiex Import. Todos los derechos reservados.</p>
-        <Link to="">Términos y condiciones</Link>
+        <div className="footer-bottom-content">
+          <p>© 2025 Taiex Import. Todos los derechos reservados.</p>
+          <Link to="/terminos">Términos y condiciones</Link>
+        </div>
       </div>
     </footer>
   );

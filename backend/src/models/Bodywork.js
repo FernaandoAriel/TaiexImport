@@ -9,8 +9,9 @@ const bodyworkSchema = new Schema(
     {
         bodyWork: {
             type: String,
-            require: true,
+            required: true
         },
-    });
+    }
+);
 
 export default model("Bodywork", bodyworkSchema);

@@ -2,6 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import NavbarCatalogo from '../../components/public/navbar/NavbarCatalogo';
 import VehicleGrid from '../../components/public/Catalogo/VehicleGrid';
+import './css/Marcas.css';
+
+// Importamos imágenes de logos para el encabezado
+import NissanLogo from "./img/Nissan.png";
+import HondaLogo from "./img/Honda.png";
+import ToyotaLogo from "./img/Toyota.png";
+import LexusLogo from "./img/Lexus.png";
+import MitsubishiLogo from "./img/mitsubishi.png";
+import KiaLogo from "./img/kialogo.png";
+import SuzukiLogo from "./img/suzukilogo.png";
+import HyundaiLogo from "./img/hyundaulogo.png";
+import MazdaLogo from "./img/mazdalogo.png";
+import SubaruLogo from "./img/subarulogo.png";
 
 const BrandCatalog = () => {
     const { brandName } = useParams();
@@ -9,6 +22,32 @@ const BrandCatalog = () => {
     const [vehicles, setVehicles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // Mapeo de logos por marca
+    const brandLogos = {
+        nissan: NissanLogo,
+        honda: HondaLogo,
+        toyota: ToyotaLogo,
+        lexus: LexusLogo,
+        mitsubishi: MitsubishiLogo,
+        kia: KiaLogo,
+        suzuki: SuzukiLogo,
+        hyundai: HyundaiLogo,
+        mazda: MazdaLogo,
+        subaru: SubaruLogo
+    };
+
+    // Obtener el logo de la marca actual
+    const getBrandLogo = () => {
+        const normalizedBrandName = brandName?.toLowerCase();
+        return brandLogos[normalizedBrandName] || NissanLogo;
+    };
+
+    // Obtener el nombre formateado de la marca
+    const getFormattedBrandName = () => {
+        if (!brandName) return 'Marca';
+        return brandName.charAt(0).toUpperCase() + brandName.slice(1).toLowerCase();
+    };
 
     useEffect(() => {
         setLoading(true);
@@ -50,20 +89,116 @@ const BrandCatalog = () => {
         return filtered;
     };
 
-    if (loading) return <div>Cargando...</div>;
-    if (error) return <div style={{ padding: 40, textAlign: 'center', color: '#ef4444', fontWeight: 700 }}>{error}</div>;
+    // Estados de carga y error con el nuevo diseño
+    if (loading) {
+        return (
+            <div className="page-container">
+                <div className="content-wrap">
+                    <main className="marcas-container">
+                        <div className="brand-header">
+                            <img
+                                src={getBrandLogo()}
+                                alt={`${getFormattedBrandName()} Logo`}
+                                className="brand-catalog-logo"
+                            />
+                        </div>
+                        <div style={{
+                            padding: '60px 20px',
+                            textAlign: 'center',
+                            fontSize: '18px',
+                            color: '#666'
+                        }}>
+                            Cargando vehículos...
+                        </div>
+                    </main>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="page-container">
+                <div className="content-wrap">
+                    <main className="marcas-container">
+                        <div className="brand-header">
+                            <img
+                                src={getBrandLogo()}
+                                alt={`${getFormattedBrandName()} Logo`}
+                                className="brand-catalog-logo"
+                            />
+                        </div>
+                        <div style={{
+                            padding: '60px 20px',
+                            textAlign: 'center',
+                            fontSize: '18px',
+                            color: '#ef4444',
+                            fontWeight: '600'
+                        }}>
+                            {error}
+                        </div>
+                    </main>
+                </div>
+            </div>
+        );
+    }
+
     if (getFilteredCars().length === 0) {
-        return <div style={{ padding: 40, textAlign: 'center', color: '#ef4444', fontWeight: 700 }}>No hay vehículos para esta marca.</div>;
+        return (
+            <div className="page-container">
+                <div className="content-wrap">
+                    
+                    <main className="marcas-container">
+                        <div className="brand-header">
+                            <img
+                                src={getBrandLogo()}
+                                alt={`${getFormattedBrandName()} Logo`}
+                                className="brand-catalog-logo"
+                            />
+                        </div>
+
+                        <NavbarCatalogo
+                            activeCategory={activeCategory}
+                            setActiveCategory={setActiveCategory}
+                            categories={getCategories()}
+                        />
+
+                        <div className="no-results">
+                            No hay vehículos disponibles para esta categoría.
+                        </div>
+                    </main>
+                </div>
+            </div>
+        );
     }
 
     return (
-        <div>
-            <NavbarCatalogo
-                activeCategory={activeCategory}
-                setActiveCategory={setActiveCategory}
-                categories={getCategories()}
-            />
-            <VehicleGrid vehicles={getFilteredCars()} brandName={brandName} />
+        <div className="page-container">
+            <div className="content-wrap">
+                <main className="marcas-container">
+                    {/* Header con logo de la marca */}
+                    <div className="brand-header">
+                        <img
+                            src={getBrandLogo()}
+                            alt={`${getFormattedBrandName()} Logo`}
+                            className="brand-catalog-logo"
+                        />
+                    </div>
+
+                    {/* Navbar de categorías */}
+                    <NavbarCatalogo
+                        activeCategory={activeCategory}
+                        setActiveCategory={setActiveCategory}
+                        categories={getCategories()}
+                    />
+
+                    {/* Grid de vehículos */}
+                    <VehicleGrid
+                        vehicles={getFilteredCars()}
+                        brandName={getFormattedBrandName()}
+                    />
+                </main>
+            </div>
         </div>
     );
 };

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useFavorites } from '../../../pages/public/FavoriteContext.jsx'; 
 import taiexLogo from '../../../pages/public/img/taiexLogo.png'; // Asegúrate de que la ruta sea correcta
-import { useAuth } from '../../../context/AuthContext.jsx';
+import { useAuth } from '../../../context/AuthContext.jsx'; // Asegúrate de que la ruta sea correcta
 import { User } from 'lucide-react';
 
 // Importamos imágenes de logos
@@ -12,6 +12,11 @@ import HondaLogo from "../../../pages/public/img/Honda.png";
 import ToyotaLogo from "../../../pages/public/img/Toyota.png";
 import LexusLogo from "../../../pages/public/img/Lexus.png";
 import MitsubishiLogo from "../../../pages/public/img/mitsubishi.png";
+import Kialogo from "../../../pages/public/img/kialogo.png";
+import SuzukiLogo from "../../../pages/public/img/suzukilogo.png";
+import HyundaiLogo from "../../../pages/public/img/hyundaulogo.png";
+import MazdaLogo from "../../../pages/public/img/mazdalogo.png";
+import SubaruLogo from "../../../pages/public/img/subarulogo.png";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -30,6 +35,11 @@ export default function Navbar() {
     { name: "Toyota", logo: ToyotaLogo, path: "/marcas/toyota" },
     { name: "Lexus", logo: LexusLogo, path: "/marcas/lexus" },
     { name: "Mitsubishi", logo: MitsubishiLogo, path: "/marcas/mitsubishi" },
+    { name: "Kia", logo: Kialogo, path: "/marcas/kia" },
+    { name: "Suzuki", logo: SuzukiLogo, path: "/marcas/suzuki" },
+    { name: "Hyundai", logo: HyundaiLogo, path: "/marcas/hyundai" },
+    { name: "Mazda", logo: MazdaLogo, path: "/marcas/mazda" },
+    { name: "Subaru", logo: SubaruLogo, path: "/marcas/subaru" }
   ];
 
   useEffect(() => {

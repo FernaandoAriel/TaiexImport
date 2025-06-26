@@ -21,7 +21,11 @@ const VehicleDetails = () => {
 
     if (!vehicle) return <div>Cargando...</div>;
 
-    // Puedes adaptar estos campos según tu modelo de datos
+    // Usar imgVehicle como imagen principal y en la galería si no hay más imágenes
+    const images = vehicle.images && vehicle.images.length > 0
+        ? vehicle.images
+        : [vehicle.imgVehicle];
+
     const vehicleData = {
         id: vehicle._id,
         brandName: brandName,
@@ -29,7 +33,7 @@ const VehicleDetails = () => {
         description: vehicle.carDetails,
         heroText: vehicle.heroText || "",
         sections: vehicle.sections || [],
-        images: vehicle.images || [vehicle.imgVehicle],
+        images: images,
         mainImage: vehicle.imgVehicle,
         rating: vehicle.rating || 0,
         price: vehicle.price,

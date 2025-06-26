@@ -7,7 +7,6 @@
     equipment
     discount
     imgVehicle
-
 */
 
 import { Schema, model, ObjectId } from "mongoose";
@@ -61,19 +60,7 @@ vehiclesSchema.virtual('modelo').get(function() {
     return this.idModel?.model || "Modelo no disponible";
 });
 
-// Middleware para populate automático
-vehiclesSchema.pre(/^find/, function(next) {
-    this.populate({
-        path: 'idModel',
-        populate: {
-            path: 'idBrand',
-            select: 'brand'
-        }
-    });
-    next();
-});
-
-// Middleware para populate automático
+// Middleware para populate automático (solo uno, incluye ambos populate)
 vehiclesSchema.pre(/^find/, function(next) {
     this.populate({
         path: 'idModel',

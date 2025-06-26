@@ -120,7 +120,7 @@ vehiclesController.getVehiclesByBrand = async (req, res) => {
             if (modelIds.length === 0) return res.json([]);
             query = { idModel: { $in: modelIds } };
         }
-        // ...resto del código...
+
         const vehicles = await vehiclesModel.find(query)
             .populate({
                 path: 'idModel',
@@ -135,7 +135,8 @@ vehiclesController.getVehiclesByBrand = async (req, res) => {
                 select: 'bodyWork'
             })
             .select('year price carDetails equipment discount idModel idBodyWork imgVehicle');
-        res.json(Array.isArray(vehicles) ? vehicles : []);
+
+        res.json(vehicles); // <--- Solo esto
     } catch (error) {
         console.error("Error al obtener vehículos por marca:", error);
         res.json([]);
