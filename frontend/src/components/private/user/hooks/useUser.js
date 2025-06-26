@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const API = "http://localhost:4000/api/Ruser";
+const API = "http://localhost:4000/api/Rcustomers";
 
 export default function useUser() {
   const [users, setUsers] = useState([]);

@@ -1,5 +1,5 @@
 // Navbar.jsx
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useFavorites } from '../../../pages/public/FavoriteContext.jsx'; 
 import taiexLogo from '../../../pages/public/img/taiexLogo.png'; // Asegúrate de que la ruta sea correcta
@@ -22,6 +22,7 @@ export default function Navbar() {
   const [brandsMenuOpen, setBrandsMenuOpen] = useState(false);
   const { favorites, removeFromFavorites } = useFavorites();
   const { user, logout, isAuthenticated } = useAuth();
+  const location = useLocation();
 
   // Definimos las marcas disponibles
   const brands = [
@@ -56,6 +57,13 @@ export default function Navbar() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Cerrar menú de perfil al navegar a /login o /register
+  useEffect(() => {
+    if (profileMenuOpen && (location.pathname === "/login" || location.pathname === "/register")) {
+      setProfileMenuOpen(false);
+    }
+  }, [location.pathname, profileMenuOpen]);
 
   return (
     <div className="navbar-container" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000 }}>
@@ -209,62 +217,42 @@ export default function Navbar() {
           >
             🛒
           </button>
-          {/* Menú de perfil de usuario */}
-          {isAuthenticated() && (
-            <div style={{ position: 'relative' }}>
-              <button
-                onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  fontSize: '1.2rem',
-                  color: '#000',
-                }}
-              >
-                <User size={24} />
-                <span style={{ fontWeight: 500 }}>{user?.firstName || 'Perfil'}</span>
-              </button>
-              {profileMenuOpen && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    right: 0,
-                    top: '110%',
-                    background: 'white',
-                    borderRadius: '8px',
-                    boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
-                    minWidth: '220px',
-                    zIndex: 1003,
-                    padding: '1rem',
-                  }}
-                >
-                  <div style={{ marginBottom: '0.5rem', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>
-                    <div style={{ fontWeight: 600 }}>{user?.firstName} {user?.lastName}</div>
-                    <div style={{ fontSize: '0.95rem', color: '#888' }}>{user?.email}</div>
-                  </div>
-                  <button
-                    onClick={logout}
-                    style={{
-                      width: '100%',
-                      background: '#ef4444',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '6px',
-                      padding: '0.5rem 0',
-                      fontWeight: 600,
-                      cursor: 'pointer',
-                      marginTop: '0.5rem',
-                    }}
-                  >
-                    Cerrar sesión
-                  </button>
-                </div>
-              )}
-            </div>
+          {/* Botón de 👤 para iniciar sesión o menú de perfil de usuario */}
+          {!isAuthenticated() ? (
+            <Link
+              to="/login"
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '1.5rem',
+                color: '#000',
+                textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                padding: 0
+              }}
+              title="Iniciar sesión"
+            >
+              <span role="img" aria-label="Iniciar sesión" style={{ fontSize: '1.7rem' }}>👤</span>
+            </Link>
+          ) : (
+            <button
+              onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                fontSize: '1.2rem',
+                color: '#000',
+              }}
+            >
+              <User size={24} />
+              <span style={{ fontWeight: 500 }}>{user?.firstName || 'Perfil'}</span>
+            </button>
           )}
         </div>
 
@@ -364,34 +352,64 @@ export default function Navbar() {
           </button>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <Link
-            to="/login"
-            style={{
-              padding: '1rem',
-              backgroundColor: '#f5f5f5',
-              borderRadius: '5px',
-              textDecoration: 'none',
-              color: '#000',
-              textAlign: 'center',
-              fontWeight: 500,
-            }}
-          >
-            Iniciar Sesión
-          </Link>
-          <Link
-            to="/register"
-            style={{
-              padding: '1rem',
-              backgroundColor: '#000',
-              borderRadius: '5px',
-              textDecoration: 'none',
-              color: '#fff',
-              textAlign: 'center',
-              fontWeight: 500,
-            }}
-          >
-            Registrarse
-          </Link>
+          {isAuthenticated() ? (
+            <>
+              <div style={{ marginBottom: '0.5rem', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>
+                <div style={{ fontWeight: 600 }}>{user?.firstName} {user?.lastName}</div>
+                <div style={{ fontSize: '0.95rem', color: '#888' }}>{user?.email}</div>
+              </div>
+              <button
+                onClick={() => {
+                  setProfileMenuOpen(false);
+                  logout();
+                }}
+                style={{
+                  width: '100%',
+                  background: '#ef4444',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '6px',
+                  padding: '0.5rem 0',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  marginTop: '0.5rem',
+                }}
+              >
+                Cerrar sesión
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                style={{
+                  padding: '1rem',
+                  backgroundColor: '#f5f5f5',
+                  borderRadius: '5px',
+                  textDecoration: 'none',
+                  color: '#000',
+                  textAlign: 'center',
+                  fontWeight: 500,
+                }}
+              >
+                Iniciar Sesión
+              </Link>
+              <Link
+                to="/register"
+                style={{
+                  padding: '1rem',
+                  backgroundColor: '#000',
+                  borderRadius: '5px',
+                  textDecoration: 'none',
+                  color: '#fff',
+                  textAlign: 'center',
+                  fontWeight: 500,
+                }}
+              >
+                Registrarse
+              </Link>
+            </>
+          )}
         </div>
       </div>
 

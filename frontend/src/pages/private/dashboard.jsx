@@ -1,7 +1,7 @@
 // src/pages/home.jsx
 import React, { useMemo } from "react";
 import useSales from "../../components/private/dashboard/hooks/useSales";
-import useUser from "../../components/private/user/hooks/useUser";
+import useCustomer from "../../components/private/user/hooks/useCustomer";
 import useComments from "../../components/private/dashboard/hooks/useComments";
 import { PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 
@@ -20,13 +20,13 @@ function useVehicles() {
 
 export default function Dashboard() {
   const { sales, loading: loadingSales } = useSales();
-  const { users, loading: loadingUsers } = useUser();
+  const { customers, loading: loadingCustomers } = useCustomer();
   const { comments, loading: loadingComments } = useComments();
   const vehicles = useVehicles();
 
   // KPIs
   const totalVentas = sales.length;
-  const totalUsuarios = users.length;
+  const totalUsuarios = customers.length;
   const totalInventario = vehicles.length;
   const totalReseñas = comments.length;
 
@@ -73,7 +73,7 @@ export default function Dashboard() {
     <div style={{ fontFamily, background: '#f8fafc', minHeight: '100vh', padding: '32px' }}>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px', marginBottom: '24px' }}>
         <Card title="Ventas totales" value={loadingSales ? '...' : totalVentas} accent="#ef4444" />
-        <Card title="Usuarios" value={loadingUsers ? '...' : totalUsuarios} accent="#3b82f6" />
+        <Card title="Usuarios" value={loadingCustomers ? '...' : totalUsuarios} accent="#3b82f6" />
         <Card title="Inventario" value={vehicles.length === 0 ? '...' : totalInventario} accent="#10b981" />
         <Card title="Reseñas" value={loadingComments ? '...' : totalReseñas} accent="#f59e42" />
       </div>

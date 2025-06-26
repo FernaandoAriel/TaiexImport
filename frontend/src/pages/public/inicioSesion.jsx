@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./css/InicioSesion.css";
 import image from "./img/image 19.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/authContext";
+import { useAuth } from "../../context/AuthContext";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
