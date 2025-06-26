@@ -15,6 +15,7 @@ import Footer from "./components/public/footer/footerCliente.jsx";
 import Quote from './pages/public/Quote.jsx';
 import Registrer from './pages/public/Registrer.jsx';
 import { CartProvider } from "./pages/public/cartContex.jsx";
+import TerminosYCondiciones from "./pages/TerminosYCondiciones.jsx";
 
 // Componentes privados
 import Sidebar from "./components/private/sidebar.jsx";
@@ -79,6 +80,7 @@ const PublicLayout = () => {
           <Route path="/cotizar" element={<Quote />} />
           <Route path="/marcas/:brandName" element={<BrandCatalog />} />
           <Route path="/marcas/:brandName/:vehicleId" element={<VehicleDetails />} />
+          <Route path="/terminos" element={<TerminosYCondiciones />} />
         </Routes>
       </main>
       <Footer />
