@@ -8,6 +8,9 @@ router.post("/", vehiclesController.createvehicles);
 router.put("/:id", vehiclesController.updatevehicles);
 router.delete("/:id", vehiclesController.deletevehicles);
 
+router.get('/by-brand', vehiclesController.getVehiclesByBrand);
 
+// NUEVA RUTA para obtener detalles de un vehículo por ID
+router.get('/:id', vehiclesController.getVehicleById);
 
 export default router;

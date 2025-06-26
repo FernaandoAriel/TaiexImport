@@ -41,7 +41,12 @@ const vehiclesSchema = new Schema({
     imgVehicle: {
         type: String,
         default: ""
-    }
+    },
+    idBodyWork: {
+        type: ObjectId,
+        ref: "Bodywork",
+        required: true
+    },
 }, { 
     timestamps: true,
     toJSON: { virtuals: true }
@@ -64,6 +69,21 @@ vehiclesSchema.pre(/^find/, function(next) {
             path: 'idBrand',
             select: 'brand'
         }
+    });
+    next();
+});
+
+// Middleware para populate automático
+vehiclesSchema.pre(/^find/, function(next) {
+    this.populate({
+        path: 'idModel',
+        populate: {
+            path: 'idBrand',
+            select: 'brand'
+        }
+    }).populate({
+        path: 'idBodyWork',
+        select: 'bodyWork'
     });
     next();
 });

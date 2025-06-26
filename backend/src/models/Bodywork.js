@@ -5,7 +5,7 @@
 
 import { Schema, model, ObjectId } from "mongoose";
 
-const billSchema = new Schema(
+const bodyworkSchema = new Schema(
     {
         bodyWork: {
             type: String,

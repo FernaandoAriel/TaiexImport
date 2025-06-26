@@ -1,11 +1,15 @@
 // Array de métodos (C R U D)
-const vehiclesController = {};
 import vehiclesModel from "../models/Vehicles.js";
+import brandModel from "../models/Brand.js";
+import modelModel from "../models/Model.js";
+import "../models/Bodywork.js";
+
+
+const vehiclesController = {};
 
 // SELECT
 vehiclesController.getVehicles = async (req, res) => {
     try {
-        // Usar el modelo importado correctamente
         const vehicles = await vehiclesModel.find()
             .populate({
                 path: 'idModel',
@@ -15,17 +19,23 @@ vehiclesController.getVehicles = async (req, res) => {
                     select: 'brand'
                 }
             })
-            .select('year price carDetails equipment discount idModel');
-        
-        // Transformar los datos para incluir marca y modelo
+            .populate({
+                path: 'idBodyWork',
+                select: 'bodyWork'
+            })
+            .select('year price carDetails equipment discount idModel idBodyWork imgVehicle');
+
+        // Transformar los datos para incluir marca, modelo y bodyWork
         const transformedVehicles = vehicles.map(vehicle => {
+            
             return {
                 ...vehicle._doc,
                 marca: vehicle.idModel?.idBrand?.brand || "Marca no disponible",
-                modelo: vehicle.idModel?.model || "Modelo no disponible"
+                modelo: vehicle.idModel?.model || "Modelo no disponible",
+                bodyWork: vehicle.idBodyWork?.bodyWork || "Carrocería no disponible"
             };
         });
-        
+
         res.json(transformedVehicles);
     } catch (error) {
         console.error("Error al obtener vehículos:", {
@@ -97,5 +107,64 @@ vehiclesController.updatevehicles = async (req, res) => {
         res.status(500).json({ error: "Error al actualizar vehículo" });
     }
 };
+
+vehiclesController.getVehiclesByBrand = async (req, res) => {
+    try {
+        const { brand } = req.query;
+        let query = {};
+        if (brand) {
+            const brandDoc = await brandModel.findOne({ brand: { $regex: new RegExp(`^${brand.trim()}$`, 'i') } });
+            if (!brandDoc) return res.json([]);
+            const models = await modelModel.find({ idBrand: brandDoc._id });
+            const modelIds = models.map(m => m._id);
+            if (modelIds.length === 0) return res.json([]);
+            query = { idModel: { $in: modelIds } };
+        }
+        // ...resto del código...
+        const vehicles = await vehiclesModel.find(query)
+            .populate({
+                path: 'idModel',
+                select: 'model idBrand',
+                populate: {
+                    path: 'idBrand',
+                    select: 'brand'
+                }
+            })
+            .populate({
+                path: 'idBodyWork',
+                select: 'bodyWork'
+            })
+            .select('year price carDetails equipment discount idModel idBodyWork imgVehicle');
+        res.json(Array.isArray(vehicles) ? vehicles : []);
+    } catch (error) {
+        console.error("Error al obtener vehículos por marca:", error);
+        res.json([]);
+    }
+};
+
+// Obtener un vehículo por ID
+vehiclesController.getVehicleById = async (req, res) => {
+    try {
+        const vehicle = await vehiclesModel.findById(req.params.id)
+            .populate({
+                path: 'idModel',
+                select: 'model idBrand',
+                populate: {
+                    path: 'idBrand',
+                    select: 'brand'
+                }
+            })
+            .populate({
+                path: 'idBodyWork',
+                select: 'bodyWork'
+            });
+        if (!vehicle) return res.status(404).json({ error: "Vehículo no encontrado" });
+        res.json(vehicle);
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener el vehículo" });
+    }
+};
+
+
 
 export default vehiclesController;

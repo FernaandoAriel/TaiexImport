@@ -1,12 +1,12 @@
-import React from 'react';
-import CardMarcas from '../components/CardMarcas';
+import VehicleCard from '../CardMarcas.jsx';
+import "../Catalogo/css/vehicle.css"
 
-export default function VehicleGrid({ vehicles }) {
-  return (
-    <div className="marcas-grid">
-      {vehicles.map(car => (
-        <CardMarcas key={car.id} car={car} />
-      ))}
-    </div>
-  );
-}
+const VehicleGrid = ({ vehicles, brandName }) => (
+  <div className="vehicle-grid">
+    {vehicles.map(car => (
+      <VehicleCard key={car._id} car={car} brandName={brandName} />
+    ))}
+  </div>
+);
+
+export default VehicleGrid;

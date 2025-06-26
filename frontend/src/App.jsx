@@ -76,6 +76,8 @@ const PublicLayout = () => {
           <Route path="/marcas/:brandName/:vehicleId" element={<VehicleDetails />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/cotizar" element={<Quote />} />
+          <Route path="/marcas/:brandName" element={<BrandCatalog />} />
+          <Route path="/marcas/:brandName/:vehicleId" element={<VehicleDetails />} />
         </Routes>
       </main>
       <Footer />
