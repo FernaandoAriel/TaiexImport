@@ -10,6 +10,11 @@ function Sidebar() {
   const { user, logout } = useAuth();
   const [profileOpen, setProfileOpen] = React.useState(false);
 
+  // Solo mostrar Sidebar si el usuario está autenticado y es admin o empleado
+  if (!user || (user?.privilages !== 'admin' && user?.privilages !== 'employee' && user?.tipo !== 'admin' && user?.tipo !== 'employee')) {
+    return null;
+  }
+
   const isActive = (path) => {
     return currentPath.startsWith(`/admin${path}`)
   }
