@@ -12,6 +12,11 @@ import userRoutes from "./src/routes/Ruser.js";
 import salesRoutes from "./src/routes/Rsales.js"
 import loginRoute from "./src/routes/Rlogin.js";
 import logoutRoute from "./src/routes/Rlogout.js";
+import registerCustomersRoutes from "./src/routes/RregisterCustomers.js";
+
+import recoveryPasswordRoutes from "./src/routes/RrecoveryPassword.js";
+import contactFormRoutes from "./src/routes/RcontactForm.js"
+
 import cors from "cors";
 
 // Creo una constante que es igual a la libreria que importé
@@ -42,6 +47,11 @@ app.use("/api/Rreviews", reviewsRoutes);
 app.use("/api/Rvehicles", vehiclesRoutes);
 app.use("/api/Ruser", userRoutes);
 app.use("/api/Rsales", salesRoutes);
+
+app.use("/api/RregisterCustomers", registerCustomersRoutes);
+app.use("/api/RcontactForm", contactFormRoutes);
+
+app.use("/api/RrecoveryPassword", recoveryPasswordRoutes);
 
 app.use("/api/login", loginRoute);
 app.use("/api/logout", logoutRoute);

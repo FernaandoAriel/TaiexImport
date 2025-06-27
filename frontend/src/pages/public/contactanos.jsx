@@ -93,13 +93,32 @@ const Contactanos = () => {
       return;
     }
     
-    // Simular envío
+    // Enviar al backend
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      showToast('¡Mensaje enviado exitosamente!', 'success');
-      setFormData({ nombre: '', apellido: '', email: '', comentario: '' });
+      const response = await fetch('http://localhost:4000/api/RcontactForm/sendContact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nombre: formData.nombre,
+          apellido: formData.apellido,
+          email: formData.email,
+          comentario: formData.comentario
+        }),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        showToast('¡Mensaje enviado exitosamente!', 'success');
+        setFormData({ nombre: '', apellido: '', email: '', comentario: '' });
+      } else {
+        showToast(responseData.message || 'Error al enviar el mensaje', 'error');
+      }
     } catch (error) {
-      showToast('Error al enviar el mensaje. Inténtalo de nuevo.', 'error');
+      console.error('Error:', error);
+      showToast('Error de conexión. Inténtalo de nuevo.', 'error');
     } finally {
       setIsSubmitting(false);
     }
@@ -116,56 +135,72 @@ const Contactanos = () => {
         <div className="contact-form-container">
           <h2 className="form-title">Ingresa tus datos</h2>
           
-          <div onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
+            <p> Nombre </p>
+
             <div className="form-group">
+              <label htmlFor="nombre" className="form-label">Nombre </label>
               <input
                 type="text"
+                id="nombre"
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleInputChange}
                 className={`form-input ${errors.nombre ? 'error' : formData.nombre && !errors.nombre ? 'success' : ''}`}
-                placeholder="Nombre"
+                placeholder="Ingresa tu nombre"
               />
               <div className={`error-message ${errors.nombre ? 'show' : ''}`}>
                 {errors.nombre}
               </div>
             </div>
             
+            <p> Apellido </p>
+
             <div className="form-group">
+              <label htmlFor="apellido" className="form-label">Apellido *</label>
               <input
                 type="text"
+                id="apellido"
                 name="apellido"
                 value={formData.apellido}
                 onChange={handleInputChange}
                 className={`form-input ${errors.apellido ? 'error' : formData.apellido && !errors.apellido ? 'success' : ''}`}
-                placeholder="Apellido"
+                placeholder="Ingresa tu apellido"
               />
               <div className={`error-message ${errors.apellido ? 'show' : ''}`}>
                 {errors.apellido}
               </div>
             </div>
             
+           <p> Correo Electronico </p> 
+
             <div className="form-group">
+              <label htmlFor="email" className="form-label">Correo Electrónico *</label>
               <input
                 type="email"
+                id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
                 className={`form-input ${errors.email ? 'error' : formData.email && !errors.email ? 'success' : ''}`}
-                placeholder="Email"
+                placeholder="ejemplo@correo.com"
               />
               <div className={`error-message ${errors.email ? 'show' : ''}`}>
                 {errors.email}
               </div>
             </div>
+
+            <p> Comentario </p>
             
             <div className="form-group">
+              <label htmlFor="comentario" className="form-label">Comentario *</label>
               <textarea
+                id="comentario"
                 name="comentario"
                 value={formData.comentario}
                 onChange={handleInputChange}
                 className={`form-input form-textarea ${errors.comentario ? 'error' : formData.comentario && !errors.comentario ? 'success' : ''}`}
-                placeholder="Comentario"
+                placeholder="Escribe tu mensaje aquí..."
               />
               <div className={`error-message ${errors.comentario ? 'show' : ''}`}>
                 {errors.comentario}
@@ -180,7 +215,7 @@ const Contactanos = () => {
               {isSubmitting && <span className="loading-spinner"></span>}
               {isSubmitting ? 'Enviando...' : 'Enviar ahora'}
             </button>
-          </div>
+          </form>
         </div>
         
         {/* Toast Container */}

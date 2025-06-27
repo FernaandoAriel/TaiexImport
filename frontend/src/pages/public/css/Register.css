@@ -153,7 +153,7 @@ body {
 }
 
 /* Cuando el campo está vacío, el label va al centro */
-.form-input:placeholder-shown + .form-label {
+.form-input:placeholder-shown+.form-label {
     top: 50%;
     transform: translateY(-50%);
     font-size: 16px;
@@ -252,12 +252,12 @@ body {
     margin-top: 1px;
 }
 
-.checkbox-input:checked + .checkbox-label .checkbox-custom {
+.checkbox-input:checked+.checkbox-label .checkbox-custom {
     background: #8C1A1A;
     border-color: #8C1A1A;
 }
 
-.checkbox-input:checked + .checkbox-label .checkbox-custom::after {
+.checkbox-input:checked+.checkbox-label .checkbox-custom::after {
     content: '✓';
     position: absolute;
     top: 50%;
@@ -321,46 +321,155 @@ body {
     box-shadow: 0 4px 12px rgba(140, 26, 26, 0.2);
 }
 
+.error {
+    border-color: #e74c3c !important;
+    box-shadow: 0 0 5px rgba(231, 76, 60, 0.3);
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+.message {
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.message:not(.success) {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* Agregar al final de tu archivo Register.css */
+
+.password-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-input-container .form-input {
+    padding-right: 50px;
+    /* Espacio para el botón */
+    width: 100%;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+    transition: all 0.3s ease;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.password-toggle:hover {
+    color: #8C1A1A;
+    background-color: rgba(140, 26, 26, 0.1);
+}
+
+.password-toggle:focus {
+    outline: none;
+    color: #8C1A1A;
+}
+
+.password-toggle:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Ajuste para que el label no interfiera con el botón */
+.password-group .password-input-container .form-label {
+    right: 50px;
+    /* Evitar que el label se superponga con el botón */
+}
+
+
+@media (max-width: 768px) {
+    .password-toggle {
+        right: 12px;
+        font-size: 16px;
+        padding: 6px;
+    }
+
+    .password-input-container .form-input {
+        padding-right: 45px;
+    }
+}
+
+@media (max-width: 480px) {
+    .password-toggle {
+        right: 10px;
+        font-size: 15px;
+        padding: 5px;
+    }
+
+    .password-input-container .form-input {
+        padding-right: 40px;
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .main-container {
         justify-content: center;
     }
-    
+
     .content-left {
         display: none;
     }
-    
+
     .content-right {
         width: 100%;
         max-width: none;
         min-height: 100vh;
         padding: 20px;
     }
-    
+
     .form-container {
         max-width: none;
         width: 100%;
         padding: 30px 30px;
     }
-    
+
     .form-header h1 {
         font-size: 2rem;
     }
-    
+
     .form-input {
         height: 50px;
         font-size: 15px;
         padding: 20px 14px 6px 14px;
     }
-    
+
     .form-label {
         left: 14px;
         top: 6px;
         font-size: 11px;
     }
-    
-    .form-input:placeholder-shown + .form-label {
+
+    .form-input:placeholder-shown+.form-label {
         top: 50%;
         transform: translateY(-50%);
         font-size: 15px;
@@ -369,7 +478,7 @@ body {
         background: rgba(255, 255, 255, 0.95);
         padding: 0 6px;
     }
-    
+
     .btn-primary {
         height: 50px;
         font-size: 1rem;
@@ -380,24 +489,24 @@ body {
     .content-right {
         padding: 15px;
     }
-    
+
     .form-container {
         padding: 25px 20px;
         border-radius: 15px;
     }
-    
+
     .form-header h1 {
         font-size: 1.8rem;
     }
-    
+
     .form-input {
         height: 48px;
     }
-    
+
     .requirement-text {
         font-size: 12px;
     }
-    
+
     .checkbox-label {
         font-size: 13px;
     }
@@ -409,28 +518,28 @@ body {
         max-width: 750px;
         padding: 60px;
     }
-    
+
     .form-container {
         max-width: 650px;
         padding: 50px 55px;
     }
-    
+
     .form-header h1 {
         font-size: 2.8rem;
     }
-    
+
     .form-input {
         height: 60px;
         font-size: 17px;
         padding: 28px 18px 10px 18px;
     }
-    
+
     .form-label {
         top: 10px;
         font-size: 12px;
     }
-    
-    .form-input:placeholder-shown + .form-label {
+
+    .form-input:placeholder-shown+.form-label {
         top: 50%;
         transform: translateY(-50%);
         font-size: 17px;
@@ -439,7 +548,7 @@ body {
         background: rgba(255, 255, 255, 0.95);
         padding: 0 6px;
     }
-    
+
     .btn-primary {
         height: 60px;
         font-size: 1.2rem;
@@ -452,6 +561,7 @@ body {
         opacity: 0;
         transform: translateX(30px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);

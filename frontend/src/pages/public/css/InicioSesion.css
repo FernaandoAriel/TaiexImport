@@ -121,6 +121,48 @@ h1 {
     background-color: #5a6268;
 }
 
+.password-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.password-input-container .input {
+    padding-right: 50px; /* Espacio para el botón */
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+    transition: color 0.3s ease;
+    z-index: 1;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.password-toggle:hover {
+    color: #8C1A1A;
+    background-color: rgba(140, 26, 26, 0.1);
+}
+
+.password-toggle:focus {
+    outline: none;
+    color: #8C1A1A;
+}
+
+.password-toggle:active {
+    transform: scale(0.95);
+}
+
 @media (max-width: 768px) {
     .login-container {
         flex-direction: column;

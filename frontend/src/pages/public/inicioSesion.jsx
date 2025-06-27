@@ -12,14 +12,15 @@ const InicioSesion = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     try {
       const result = await login(email, password);
-      console.log("Login result:", result); // Agrega esto para depuración
-  
+      console.log("Login result:", result);
+
       if (result.success) {
         toast.success("¡Usuario logeado con éxito!", {
           position: "top-right",
@@ -30,8 +31,7 @@ const InicioSesion = () => {
           draggable: true,
           progress: undefined,
         });
-  
-        // Redirigir inmediatamente (sin setTimeout)
+
         if (result.userType === 'admin' || result.userType === 'employee') {
           navigate("/admin");
         } else {
@@ -75,14 +75,30 @@ const InicioSesion = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <input
-          className="input"
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button className="Recuperar">Recuperar Contraseña</button>
+        
+        <div className="password-input-container">
+          <input
+            className="input"
+            type={showPassword ? "text" : "password"}
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            type="button"
+            className="password-toggle"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? "👁️" : "👁️‍🗨️"}
+          </button>
+        </div>
+
+        <button
+          className="Recuperar"
+          onClick={() => navigate('/recuperar-contrasena')}
+        >
+          Recuperar Contraseña
+        </button>
 
         <button className="Boton" onClick={handleLogin}>
           Iniciar Sesión

@@ -1,5 +1,4 @@
 /backend/.env
 /backend/node_modules
-node_modules
-*.env
-.DS_Store
+/backend/*.env
+/backend/.DS_Store

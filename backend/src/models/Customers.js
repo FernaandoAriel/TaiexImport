@@ -4,8 +4,6 @@
         lastName
         email
         password
-        profilePicture
-        birthDate
         
         }
 
@@ -30,15 +28,7 @@ const customersSchema = new Schema(
         password: {
             type: String,
             require: true,
-        },
-        profilePicture: {
-            type: String,
-            require: true,
-        },
-        birthDate: {
-            type: Date,
-            require: true,
-        },
+        }
     });
 
 export default model("Customer", customersSchema);

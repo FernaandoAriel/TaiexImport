@@ -16,6 +16,10 @@ import Quote from './pages/public/Quote.jsx';
 import Registrer from './pages/public/Registrer.jsx';
 import { CartProvider } from "./pages/public/cartContex.jsx";
 import TerminosYCondiciones from "./pages/TerminosYCondiciones.jsx";
+import VerificarCodigo from "./pages/public/VerificarCodigo.jsx";
+import RecuperarContraseña from "./pages/public/RecuperarContraseña.jsx";
+import VerificarCodigoRecu from "./pages/public/VerificarCodigoRecu.jsx";
+import NuevaContraseña from "./pages/public/NuevaContraseña.jsx";
 
 // Componentes privados
 import Sidebar from "./components/private/sidebar.jsx";
@@ -81,6 +85,10 @@ const PublicLayout = () => {
           <Route path="/marcas/:brandName" element={<BrandCatalog />} />
           <Route path="/marcas/:brandName/:vehicleId" element={<VehicleDetails />} />
           <Route path="/terminos" element={<TerminosYCondiciones />} />
+          <Route path="/verificar-codigo" element={<VerificarCodigo/>} />
+          <Route path="/recuperar-contrasena" element={<RecuperarContraseña/>} />
+          <Route path="/verificar-codigorecu" element={<VerificarCodigoRecu/>} />
+          <Route path="/nueva-contrasena" element={<NuevaContraseña/>} />
         </Routes>
       </main>
       <Footer />
